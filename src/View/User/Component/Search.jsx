@@ -14,12 +14,7 @@ const SearchInput = () => {
 
   const handleSearchChange = (e) => {
     setInputValue(e.target.value);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      dispatch(setSearchTerm(inputValue));
-    }
+    dispatch(setSearchTerm(e.target.value));
   };
 
   return (
@@ -32,7 +27,6 @@ const SearchInput = () => {
         placeholder="Search products..."
         value={inputValue}
         onChange={handleSearchChange}
-        onKeyPress={handleKeyPress}
         className="border-none focus:outline-none py-2 px-4 w-40 sm:w-64"
       />
     </div>
