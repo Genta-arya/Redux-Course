@@ -18,7 +18,7 @@ const Category = () => {
 
   return (
     <div className="grid grid-cols-1 justify-start gap-4 ">
-      <label className="text-white">Pilih Kategori:</label>
+      <label className="text-white ">Pilih Kategori:</label>
       <select
         value={selectedCategory}
         onChange={(e) => {
@@ -26,7 +26,7 @@ const Category = () => {
         }}
         className="ml-2 px-2 py-1 border rounded justify-end w-auto lg:w-80 md:w-80 lg:h-12 md:h-12"
       >
-        <option value="">All Categories</option>
+        <option value="" className="l">All Categories</option>
         {uniqueCategories.map((category) => (
           <option key={category} value={category}>
             {category}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -17,13 +17,18 @@ import {
   selectProducts,
   setProducts,
   selectSortOrder,
+  selectCharter,
   selectSearchTerm,
+  sortByPrice,
+  sortByCharacter,
 } from "./fitur/productSlice";
 import CategoryFilter from "../Category";
 import Skeleton from "./skleton";
-import SortPrice from "../SortPrice";
+
 import Rating from "../Rating";
-import SortByCharter from "../SortByCharter";
+
+import { useNavigate } from "react-router-dom";
+import SortFitur from "../SortFitur";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -36,11 +41,14 @@ const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const selectedCategory = useSelector(selectCategory);
+  const selectedCategoryFilter = useSelector(selectCategory);
   const cartItems = useSelector(selectCartItems);
   const sortOrder = useSelector(selectSortOrder);
+  const charter = useSelector(selectCharter);
   const [loading, setLoading] = React.useState(true);
+  const [isError, setIsError] = useState(false);
   const [isCartModalOpen, setCartModalOpen] = React.useState(false);
-
+  const navigate = useNavigate();
   const fetchData = async () => {
     try {
       const response = await axios.get("https://fakestoreapi.com/products");
@@ -48,6 +56,7 @@ const ProductList = () => {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setIsError(true);
     }
   };
 
@@ -76,22 +85,14 @@ const ProductList = () => {
   };
 
   const searchTerm = useSelector(selectSearchTerm);
-
-  const filteredProducts = products
+  const filteredAndSortedProducts = products
     .filter(
       (product) =>
         (selectedCategory === "" || product.category === selectedCategory) &&
         (searchTerm === "" ||
           product.title.toLowerCase().includes(searchTerm.toLowerCase()))
     )
-    .sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a.price - b.price;
-      } else {
-        return b.price - a.price;
-      }
-    });
-
+    .sort((a, b) => sortByCharacter([a, b], charter));
   return (
     <div className="w-screen">
       {loading ? (
@@ -99,20 +100,19 @@ const ProductList = () => {
       ) : (
         <div className="lg:flex  items-center grid grid-cols-1 gap-4 p-4  bg-gray-800 w-screen border-t-2 border-white">
           <CategoryFilter />
-          <SortPrice />
-          <SortByCharter />
+          <SortFitur />
         </div>
       )}
 
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  md:p-3   w-full ">
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
-        ) : filteredProducts.length === 0 ? (
+        ) : filteredAndSortedProducts.length === 0 ? (
           <div className="flex mx-auto items-center justify-center">
             <div className="text-white text-center  ">Products not found.</div>
           </div>
         ) : (
-          filteredProducts.map((product) => (
+          filteredAndSortedProducts.map((product) => (
             <div
               className="shadow-2xl bg-white rounded-xl px-12 p-4 h-auto  w-80 lg:w-[90%] md:w-96  text-center mx-auto mb-8 flex flex-col justify-between"
               key={product.id}
