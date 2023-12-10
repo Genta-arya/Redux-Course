@@ -5,7 +5,6 @@ import {
   selectProducts,
   setCategory,
 } from "./productlist/fitur/productSlice";
-import SortPrice from "./SortPrice";
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -26,14 +25,15 @@ const Category = () => {
         }}
         className="ml-2 px-2 py-1 border rounded justify-end w-auto lg:w-80 md:w-80 lg:h-12 md:h-12"
       >
-        <option value="" className="l">All Categories</option>
+        <option value="" className="l">
+          All Categories
+        </option>
         {uniqueCategories.map((category) => (
           <option key={category} value={category}>
             {category}
           </option>
         ))}
       </select>
-     
     </div>
   );
 };
