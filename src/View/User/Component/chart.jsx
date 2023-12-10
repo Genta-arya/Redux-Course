@@ -6,7 +6,7 @@ import {
   faPlus,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "../../../style/CartModalContent.module.css";
 import { removeItem } from "./productlist/fitur/slice";
 
@@ -43,10 +43,33 @@ const CartModalContent = ({
     };
   }, [closeCartModal]);
 
+  const formatOrderDetails = (cartItems) => {
+    return cartItems
+      .map((item, index) => {
+        const itemNumber = index + 1;
+        return `${itemNumber}. ${item.title} - Qty: ${item.quantity} - Total: $${item.totalPrice}`;
+      })
+      .join("\n");
+  };
+
+  const handleOrder = () => {
+    const orderDetails = formatOrderDetails(cartItems);
+
+    const phoneNumber = "6281285241889";
+
+    const whatsappMessage = `Hi, I would like to place an order.\n\n${orderDetails}`;
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
+
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <div
       ref={modalRef}
-      className={`bg-white p-6 rounded-md shadow-lg relative ${styles.cartContainer}`}
+      className={`bg-white p-6 rounded-md shadow-lg relative ${styles.cartContainer} h-[500px] overflow-y-auto`}
     >
       <button
         className="absolute top-2 left-4 text-gray-500 hover:text-gray-700 focus:outline-none"
@@ -115,6 +138,12 @@ const CartModalContent = ({
             onClick={handleClearCart}
           >
             <FontAwesomeIcon icon={faTrash} /> Remove All
+          </button>
+          <button
+            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+            onClick={handleOrder}
+          >
+            Place Order on WhatsApp
           </button>
         </div>
       )}
