@@ -1,0 +1,14 @@
+.slideOut {
+  animation: slideOut 0.3s ease-in-out;
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
