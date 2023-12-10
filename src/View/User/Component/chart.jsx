@@ -143,7 +143,7 @@ const CartModalContent = ({
             className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
             onClick={handleOrder}
           >
-            Place Order on WhatsApp
+            Order
           </button>
         </div>
       )}
