@@ -12,6 +12,7 @@ import { removeItem } from "./productlist/fitur/slice";
 
 const CartModalContent = ({
   cartItems,
+
   handleClearCart,
   handleDecreaseQuantity,
   handleIncreaseQuantity,
@@ -43,21 +44,24 @@ const CartModalContent = ({
     };
   }, [closeCartModal]);
 
-  const formatOrderDetails = (cartItems) => {
-    return cartItems
+  const handleOrder = () => {
+    const totalOrderPrice = cartItems.reduce(
+      (total, item) => total + item.totalPrice,
+      0
+    );
+
+    const formattedTotalOrderPrice = totalOrderPrice.toFixed(2);
+
+    const orderDetails = cartItems
       .map((item, index) => {
         const itemNumber = index + 1;
         return `${itemNumber}. ${item.title} - Qty: ${item.quantity} - Total: $${item.totalPrice}\nImage: ${item.image}`;
       })
       .join("\n");
-  };
-
-  const handleOrder = () => {
-    const orderDetails = formatOrderDetails(cartItems);
 
     const phoneNumber = "6281285241889";
 
-    const whatsappMessage = `Hi, I would like to place an order.\n\n${orderDetails}`;
+    const whatsappMessage = `Hi, I would like to place an order.\n\n${orderDetails}\nTotal Order Price: $${formattedTotalOrderPrice}`;
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       whatsappMessage
@@ -66,10 +70,16 @@ const CartModalContent = ({
     window.open(whatsappUrl, "_blank");
   };
 
+  const calculateTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + item.totalPrice, 0);
+  };
+
+  const totalCartPrice = calculateTotalPrice();
+  const formattedTotalCartPrice = totalCartPrice.toFixed(2);
   return (
     <div
       ref={modalRef}
-      className={`bg-white p-6 rounded-md shadow-lg relative ${styles.cartContainer} h-[500px] overflow-y-auto`}
+      className={`bg-white p-6 rounded-md shadow-lg relative ${styles.cartContainer} h-[500px] overflow-y-auto `}
     >
       <button
         className="absolute top-2 left-4 text-gray-500 hover:text-gray-700 focus:outline-none"
@@ -139,6 +149,7 @@ const CartModalContent = ({
           >
             <FontAwesomeIcon icon={faTrash} /> Remove All
           </button>
+          <div className="text-base font-bold">Total : ${formattedTotalCartPrice}</div>
           <button
             className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
             onClick={handleOrder}
