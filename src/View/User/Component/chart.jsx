@@ -44,12 +44,13 @@ const CartModalContent = ({
   }, [closeCartModal]);
 
   const formatOrderDetails = (cartItems) => {
-    return cartItems
-      .map((item, index) => {
-        const itemNumber = index + 1;
-        return `${itemNumber}. ${item.title} - Qty: ${item.quantity} - Total: $${item.totalPrice}`;
-      })
-      .join("\n");
+    return cartItems.map((item, index) => {
+      const itemNumber = index + 1;
+      return {
+        text: `${itemNumber}. ${item.title} - Qty: ${item.quantity} - Total: $${item.totalPrice}`,
+        image: item.image,
+      };
+    });
   };
 
   const handleOrder = () => {
@@ -57,10 +58,19 @@ const CartModalContent = ({
 
     const phoneNumber = "6281285241889";
 
-    const whatsappMessage = `Hi, I would like to place an order.\n\n${orderDetails}`;
+    const whatsappMessages = orderDetails.map((item) => {
+      return {
+        component_type: "media",
+        media: {
+          type: "image",
+          url: item.image,
+          caption: item.text,
+        },
+      };
+    });
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      whatsappMessage
+      JSON.stringify(whatsappMessages)
     )}`;
 
     window.open(whatsappUrl, "_blank");
