@@ -4,6 +4,7 @@ import Content from "./Component/Content";
 import Footer from "./Component/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import FooterDaisy from "./Component/FooterDaisy";
 
 const HomePage = () => {
   const [showScroll, setShowScroll] = useState(false);
@@ -36,6 +37,7 @@ const HomePage = () => {
       <div className="mb-12">
         <Content />
       </div>
+      <FooterDaisy />
       <Footer />
       {showScroll && (
         <div

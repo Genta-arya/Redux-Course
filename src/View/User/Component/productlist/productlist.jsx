@@ -108,10 +108,10 @@ const ProductList = () => {
       {loading ? (
         <div className="mb-2 md:flex sm:flex flex-col justify-end p-12 lg:mr-24"></div>
       ) : (
-        <div className="mb-2 md:flex sm:flex flex-col justify-end p-12 lg:mr-24">
+        <div className="mb-2 md:flex sm:flex flex-col justify-end p-12 lg:mr-24 bg-gray-800  w-screen border-t-2 border-white">
           <label
             htmlFor="categoryFilter"
-            className="text-white text-base font-extrabold mr-4"
+            className="text-white text-base font-extrabold mr-4 "
           >
             Pilih Kategori:
           </label>
@@ -161,7 +161,7 @@ const ProductList = () => {
                   </p>
                 </div>
                 <button
-                  className="bg-blue-500 text-white w-full px-4 py-2 rounded hover:bg-blue-700"
+                  className="bg-black text-white w-full px-4 py-2 rounded hover:bg-gray-800"
                   onClick={() => {
                     dispatch(addItem(product));
                     openCartModal();

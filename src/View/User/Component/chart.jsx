@@ -6,7 +6,7 @@ import {
   faPlus,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import styles from "../../../style/CartModalContent.module.css";
 import { removeItem } from "./productlist/fitur/slice";
 
