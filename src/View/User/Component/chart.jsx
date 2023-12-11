@@ -127,7 +127,7 @@ const CartModalContent = ({
       } else {
         console.log("Order sent successfully");
       }
-      navigate("/history");
+    
     } catch (error) {
       console.error("Error sending order:", error);
       navigate("/Error");

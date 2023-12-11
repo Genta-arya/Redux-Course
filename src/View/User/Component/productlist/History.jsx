@@ -9,15 +9,16 @@ const History = () => {
   const [loading, setLoading] = useState(true);
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-    
+    const token = localStorage.getItem("token");
+    if (token) {
       navigate("/");
-      return;
     }
+  }, [navigate]);
 
+  useEffect(() => {
     const fetchHistory = async () => {
       try {
         const response = await axios.post(`${API_ENDPOINTS.Gethistory}`, {
