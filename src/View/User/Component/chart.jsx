@@ -121,6 +121,7 @@ const CartModalContent = ({
       const responseData = await response.json();
 
       const redirectUrl = responseData.redirectUrl;
+      navigate("/history");
 
       if (redirectUrl) {
         window.open(redirectUrl, "_blank");
