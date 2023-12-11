@@ -18,10 +18,11 @@ const SortFitur = () => {
         onChange={(e) => handleCharterChange(e.target.value)}
         className="ml-2 px-2 py-1 border rounded justify-end w-auto lg:w-80 md:w-80 lg:h-12 md:h-12"
       >
-        <option value="low">A-Z</option>
-        <option value="high">Z-A</option>
-        <option value="lowPrice">Harga Terendah - Tertinggi</option>
-        <option value="highPrice">Harga Tertinggi - Terendah</option>
+        <option value="high">A-Z</option>
+        <option value="low">Z-A</option>
+
+        <option value="lowPrice">Harga Tertinggi - Terendah</option>
+        <option value="highPrice">Harga Terendah - Tertinggi</option>
       </select>
     </div>
   );

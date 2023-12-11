@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -10,12 +10,15 @@ import {
 } from "./productlist/fitur/slice";
 import CartModalContent from "./chart";
 import SearchInput from "./Search";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const cartItemCount = cartItems.length;
 
@@ -49,9 +52,43 @@ const Navbar = () => {
     window.removeEventListener("click", closeMobileMenu);
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setDropdownOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    window.location.reload();
+  };
+  const handleClickAvatar = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <div className="bg-gray-800 p-4 w-screen">
-      <div className="flex justify-between items-center px-2 lg:px-32 md:px-32">
+      <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
         <div className="text-white text-lg font-bold">IKKEA SHOP</div>
         <div className="lg:hidden md:hidden">
           <FontAwesomeIcon
@@ -62,16 +99,61 @@ const Navbar = () => {
         </div>
         <div className="hidden lg:flex md:flex items-center">
           <SearchInput />
-          <div className="text-white flex items-center ml-4">
-            <FontAwesomeIcon
-              icon={faShoppingCart}
-              className="mr-2 text-2xl cursor-pointer"
-              onClick={openCartModal}
-            />
-            <div className="bg-red-500 text-white font-bold rounded-full px-2">
-              {cartItemCount}
+        </div>
+        <div className="flex gap-12">
+          {localStorage.getItem("token") ? (
+            <div className="text-white flex items-center ml-4">
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                className="mr-2 text-2xl cursor-pointer"
+                onClick={openCartModal}
+              />
+              <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                {cartItemCount}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="text-white flex items-center ml-4 opacity-50">
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                className="mr-2 text-2xl "
+              />
+              <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                {cartItemCount}
+              </div>
+            </div>
+          )}
+
+          {localStorage.getItem("token") ? (
+            <div className="avatar online" onClick={handleClickAvatar}>
+              <div className="w-10 rounded-full overflow-hidden">
+                <img
+                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  alt="Avatar"
+                  className="w-full h-full object-cover cursor-pointer"
+                />
+              </div>
+              {isDropdownOpen && (
+                <div className="absolute top-12 right-4  h-auto">
+                  <ul className="bg-white  p-2 rounded-md shadow-md">
+                    <li
+                      className="text-center justify-center items-center flex cursor-pointer"
+                      onClick={handleLogout}
+                    >
+                      <a>Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <h1
+              className="text-white text-lg font-bold cursor-pointer"
+              onClick={handleLogin}
+            >
+              Login
+            </h1>
+          )}
         </div>
 
         {isCartModalOpen && (

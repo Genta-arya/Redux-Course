@@ -138,11 +138,19 @@ const ProductList = () => {
                 </p>
               </div>
               <button
-                className="bg-black text-white w-full px-4 py-2 rounded hover:bg-gray-800"
+                className={`bg-black text-white w-full px-4 py-2 rounded ${
+                  localStorage.getItem("token")
+                    ? "hover:bg-gray-800"
+                    : "bg-gray-300 "
+                }`}
                 onClick={() => {
-                  dispatch(addItem(product));
-                  openCartModal();
+                  const token = localStorage.getItem("token");
+                  if (token) {
+                    dispatch(addItem(product));
+                    openCartModal();
+                  }
                 }}
+                disabled={!localStorage.getItem("token")}
               >
                 <FontAwesomeIcon
                   icon={faShoppingCart}

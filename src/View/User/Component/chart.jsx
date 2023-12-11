@@ -9,6 +9,8 @@ import {
 import { useDispatch } from "react-redux";
 import styles from "../../../style/CartModalContent.module.css";
 import { removeItem } from "./productlist/fitur/slice";
+import { useNavigate } from "react-router-dom";
+import { API_ENDPOINTS } from "../../../service/API";
 
 const CartModalContent = ({
   cartItems,
@@ -21,6 +23,8 @@ const CartModalContent = ({
   const [itemToRemove, setItemToRemove] = useState(null);
   const dispatch = useDispatch();
   const modalRef = useRef(null);
+  const navigate = useNavigate();
+  const username = localStorage.getItem("username");
 
   const handleRemoveWithSlide = (itemId) => {
     setItemToRemove(itemId);
@@ -73,9 +77,65 @@ const CartModalContent = ({
   const calculateTotalPrice = () => {
     return cartItems.reduce((total, item) => total + item.totalPrice, 0);
   };
-
+  const truncateString = (str, maxLength) => {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength);
+    }
+    return str;
+  };
   const totalCartPrice = calculateTotalPrice();
   const formattedTotalCartPrice = totalCartPrice.toFixed(2);
+  const MAX_ITEM_NAME_LENGTH = 50;
+
+  const handlePay = async () => {
+    const currentDate = new Date();
+    const formattedCurrentDate = currentDate.toISOString();
+
+    const orderDetails = {
+      items: cartItems.map((item) => ({
+        id_product: item.id,
+        nm_product: truncateString(item.title, MAX_ITEM_NAME_LENGTH),
+        image: item.image,
+        qty: item.quantity,
+        price: formattedTotalCartPrice,
+        username: username,
+      })),
+      email: "example@example.com",
+
+      time: formattedCurrentDate,
+    };
+
+    try {
+      const response = await fetch(`${API_ENDPOINTS.ORDER}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send order");
+      }
+
+      const responseData = await response.json();
+
+      const redirectUrl = responseData.redirectUrl;
+
+      if (redirectUrl) {
+        window.open(redirectUrl, "_blank");
+      } else {
+        console.log("Order sent successfully");
+      }
+      navigate("/history");
+    } catch (error) {
+      console.error("Error sending order:", error);
+      navigate("/Error");
+    }
+
+    handleClearCart();
+    closeCartModal();
+  };
   return (
     <div
       ref={modalRef}
@@ -108,7 +168,7 @@ const CartModalContent = ({
               <div>
                 <p className="text-lg font-bold">{item.title}</p>
                 <p className="text-lg font-bold">${item.totalPrice}</p>
-                <p className="text-xs font-bold mt-2">Qty</p>
+
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => handleDecreaseQuantity(item.id)}
@@ -142,20 +202,31 @@ const CartModalContent = ({
       )}
 
       {cartItems.length > 0 && (
-        <div className="flex items-center justify-between mt-4">
+        <div className="grid grid-cols-1  lg:flex md:flex items-center justify-between mt-4">
           <button
             className="text-red-500 font-semibold hover:text-red-700 focus:outline-none"
             onClick={handleClearCart}
           >
             <FontAwesomeIcon icon={faTrash} /> Remove All
           </button>
-          <div className="text-base font-bold">Total : ${formattedTotalCartPrice}</div>
-          <button
-            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
-            onClick={handleOrder}
-          >
-            Order
-          </button>
+          <div className="text-base font-bold">
+            Total : ${formattedTotalCartPrice}
+          </div>
+          <div className="flex gap-2 justify-center mt-4">
+            <button
+              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+              onClick={handleOrder}
+            >
+              Chat Admin
+            </button>
+
+            <button
+              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+              onClick={handlePay}
+            >
+              Pay
+            </button>
+          </div>
         </div>
       )}
     </div>
