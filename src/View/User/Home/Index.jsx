@@ -41,7 +41,7 @@ const HomePage = () => {
       <Footer />
       {showScroll && (
         <div
-          className="fixed bottom-10 right-5 md:bottom-10 md:right-5 lg:bottom-40 lg:right-10 bg-gray-700 lg:p-5 md:p-5 p-3 rounded-full cursor-pointer"
+          className="fixed bottom-20 right-5 md:bottom-24 md:right-5 lg:bottom-40 lg:right-10 bg-gray-700 lg:p-5 md:p-5 p-3 rounded-full cursor-pointer"
           onClick={scrollToTop}
         >
           <FontAwesomeIcon icon={faArrowUp} className="text-white text-sm" />

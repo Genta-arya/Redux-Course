@@ -5,6 +5,8 @@ import {
   faShoppingCart,
   faBars,
   faGamepad,
+  faHistory,
+  faH,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   selectCartItems,
@@ -15,10 +17,11 @@ import {
 import CartModalContent from "./chart";
 import SearchInput from "./Search";
 import { useNavigate } from "react-router-dom";
+import BottomNav from "./BottomNav";
 
 const Navbar = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(true);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
   const dispatch = useDispatch();
@@ -32,6 +35,9 @@ const Navbar = () => {
 
   const openGame = () => {
     navigate("/game");
+  };
+  const openHistory = () => {
+    navigate("/history");
   };
 
   const closeCartModal = () => {
@@ -97,27 +103,24 @@ const Navbar = () => {
   return (
     <div className="bg-gray-800 p-4 w-screen">
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
-        <div className="text-white text-lg font-bold lg:block md:block hidden">
-          IKKEA SHOP
-        </div>
-        <div className="lg:hidden md:hidden block">
-          <FontAwesomeIcon
-            icon={faBars}
-            className="text-white text-2xl cursor-pointer"
-            onClick={toggleMobileMenu}
-          />
-        </div>
-        <div className="hidden lg:flex md:flex items-center">
+        <div className="text-white text-lg font-bold lg:block ">IKKEA SHOP</div>
+
+        <div className="hidden lg:flex md:hidden items-center">
           <SearchInput />
         </div>
         <div className="flex gap-12">
           {localStorage.getItem("token") ? (
-            <div className=" items-center md:block lg:block mt-2 hidden">
+            <div className=" items-center md:hidden lg:block mt-2 hidden ">
               <div className="text-white flex items-center ml-4  ">
                 <FontAwesomeIcon
                   icon={faGamepad}
                   className="mr-12 text-2xl cursor-pointer"
                   onClick={openGame}
+                />
+                <FontAwesomeIcon
+                  icon={faHistory}
+                  className="mr-12 text-2xl cursor-pointer"
+                  onClick={openHistory}
                 />
                 <FontAwesomeIcon
                   icon={faShoppingCart}
@@ -130,12 +133,16 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div className="mt-2 md:block lg:block hidden ">
+            <div className="mt-2 md:hidden lg:block hidden ">
               <div className="text-white flex items-center ml-4  ">
                 <FontAwesomeIcon
                   icon={faGamepad}
                   className="mr-12 text-2xl cursor-pointer "
                   onClick={openGame}
+                />
+                <FontAwesomeIcon
+                  icon={faHistory}
+                  className="mr-12 text-2xl  opacity-50 "
                 />
                 <FontAwesomeIcon
                   icon={faShoppingCart}
@@ -197,46 +204,18 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="text-white text-center py-2 mt-12 lg:hidden md:hidden block">
-          <div className="flex text-black justify-between">
+        <div className="text-white text-center py-2 mt-12 lg:hidden md:block block">
+          <div className="flex text-black justify-center">
             <SearchInput />
-            <div className="text-white flex items-center justify-end ml-4 gap-2 ">
-              {localStorage.getItem("token") ? (
-                <React.Fragment>
-                  <FontAwesomeIcon
-                    icon={faGamepad}
-                    className="mr-2 text-2xl cursor-pointer"
-                    onClick={openGame}
-                  />
-
-                  <FontAwesomeIcon
-                    icon={faShoppingCart}
-                    className="mr-2 text-2xl cursor-pointer"
-                    onClick={openCartModal}
-                  />
-                  <div className="bg-red-500 text-white font-bold rounded-full px-2">
-                    {cartItemCount}
-                  </div>
-                </React.Fragment>
-              ) : (
-                <div className="mt-2  ">
-                  <div className="text-white flex items-center ml-4  ">
-                    <FontAwesomeIcon
-                      icon={faGamepad}
-                      className="mr-2 text-2xl cursor-pointer"
-                      onClick={openGame}
-                    />
-                    <FontAwesomeIcon
-                      icon={faShoppingCart}
-                      className="mr-2  ml-2 text-2xl opacity-50 "
-                    />
-                    <div className="bg-red-500 text-white font-bold rounded-full px-2  opacity-50">
-                      {cartItemCount}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+          </div>
+          <div className="text-white flex items-center justify-end ml-4 gap-2 ">
+            <BottomNav
+              openGame={openGame}
+              openHistory={openHistory}
+              openCartModal={openCartModal}
+              cartItemCount={cartItemCount}
+              isAuthenticated={localStorage.getItem("token")}
+            />
           </div>
         </div>
       )}
