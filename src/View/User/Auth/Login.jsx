@@ -31,9 +31,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
 
-  useEffect(() => {
-    document.title = `OmYoo-Studio | Login`;
-  });
+  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -50,10 +48,7 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-
+  
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
