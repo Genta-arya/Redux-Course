@@ -100,7 +100,7 @@ const Navbar = () => {
         <div className="text-white text-lg font-bold lg:block md:block hidden">
           IKKEA SHOP
         </div>
-        <div className="lg:hidden md:hidden">
+        <div className="lg:hidden md:hidden block">
           <FontAwesomeIcon
             icon={faBars}
             className="text-white text-2xl cursor-pointer"
@@ -197,7 +197,7 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="text-white text-center py-2 mt-12">
+        <div className="text-white text-center py-2 mt-12 lg:hidden md:hidden block">
           <div className="flex text-black justify-between">
             <SearchInput />
             <div className="text-white flex items-center justify-end ml-4 gap-2 ">
