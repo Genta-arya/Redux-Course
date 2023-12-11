@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import HomePage from "./View/User/Index";
 import DetailNotFound from "./View/User/Component/404";
 import ErrorPage from "./View/User/Component/ErrorPage";
@@ -9,7 +9,7 @@ import Register from "./View/User/Auth/Register";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginForm />} />
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/Error" element={<ErrorPage />} />
         <Route path="*" element={<DetailNotFound />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 };
 
