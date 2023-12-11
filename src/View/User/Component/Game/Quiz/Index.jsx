@@ -10,7 +10,7 @@ function StartScreen({ onStartClick, highScore }) {
   });
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black sm:w-auto w-max">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black sm:w-auto ">
       <div className="bg-black rounded-3xl border-8 border-gray-300 p-3 ">
         <div className="bg-white rounded shadow-lg p-8 w-96 text-center">
           <h1 className="text-3xl font-bold mb-4  bg-black hover:z-10 hover:scale-105 text-white justify-center items-center p-4 rounded-full border-b-8 border-gray-300">
@@ -22,7 +22,7 @@ function StartScreen({ onStartClick, highScore }) {
           <p className="text-lg mb-8">Skor Tertinggi: {highScore}</p>
           <button
             onClick={onStartClick}
-            className=" animate-pulse bg-black text-white rounded hover:bg-gray-700 focus:outline-none hover:scale-105 hover:z-50 bg-black text-white p-4 rounded-full border-b-8 border-gray-300 shadow-2xl"
+            className=" animate-pulse  hover:bg-gray-700 focus:outline-none hover:scale-105 hover:z-50 bg-black text-white p-4 rounded-full border-b-8 border-gray-300 shadow-2xl"
           >
             <FontAwesomeIcon icon={faPlay} /> Play
           </button>
@@ -102,7 +102,7 @@ function QuizApp() {
   return (
     <div>
       {gameStarted ? (
-        <div className="min-h-screen flex items-center justify-center bg-black  sm:w-auto w-max">
+        <div className="min-h-screen flex items-center justify-center bg-black  sm:w-auto ">
           <div className="bg-black p-3 rounded-3xl border-8 border-gray-300 ">
             <div className="bg-white rounded-lg shadow-lg p-12 w-96 drop-shadow-2xl">
               {showScore ? (

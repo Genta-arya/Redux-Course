@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faBars , faGamepad } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingCart,
+  faBars,
+  faGamepad,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   selectCartItems,
   clearCart,
@@ -27,9 +31,8 @@ const Navbar = () => {
   };
 
   const openGame = () => {
-    navigate("/game")
+    navigate("/game");
   };
-
 
   const closeCartModal = () => {
     setCartModalOpen(false);
@@ -195,7 +198,7 @@ const Navbar = () => {
                     className="mr-2 text-2xl cursor-pointer"
                     onClick={openGame}
                   />
-                 
+
                   <FontAwesomeIcon
                     icon={faShoppingCart}
                     className="mr-2 text-2xl cursor-pointer"
@@ -206,13 +209,18 @@ const Navbar = () => {
                   </div>
                 </React.Fragment>
               ) : (
-                <div className="mt-2">
-                  <div className="text-white flex items-center ml-4 opacity-50 ">
+                <div className="mt-2  ">
+                  <div className="text-white flex items-center ml-4  ">
+                    <FontAwesomeIcon
+                      icon={faGamepad}
+                      className="mr-2 text-2xl cursor-pointer"
+                      onClick={openGame}
+                    />
                     <FontAwesomeIcon
                       icon={faShoppingCart}
-                      className="mr-2 text-2xl "
+                      className="mr-2  ml-2 text-2xl opacity-50 "
                     />
-                    <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                    <div className="bg-red-500 text-white font-bold rounded-full px-2  opacity-50">
                       {cartItemCount}
                     </div>
                   </div>
