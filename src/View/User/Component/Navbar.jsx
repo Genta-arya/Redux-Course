@@ -115,6 +115,11 @@ const Navbar = () => {
             <div className=" items-center md:block lg:block mt-2 hidden">
               <div className="text-white flex items-center ml-4  ">
                 <FontAwesomeIcon
+                  icon={faGamepad}
+                  className="mr-12 text-2xl cursor-pointer"
+                  onClick={openGame}
+                />
+                <FontAwesomeIcon
                   icon={faShoppingCart}
                   className="mr-2 text-2xl cursor-pointer"
                   onClick={openCartModal}
@@ -125,13 +130,18 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div className="mt-2 md:block lg:block hidden">
-              <div className="text-white flex items-center ml-4 opacity-50 ">
+            <div className="mt-2 md:block lg:block hidden ">
+              <div className="text-white flex items-center ml-4  ">
+                <FontAwesomeIcon
+                  icon={faGamepad}
+                  className="mr-12 text-2xl cursor-pointer "
+                  onClick={openGame}
+                />
                 <FontAwesomeIcon
                   icon={faShoppingCart}
-                  className="mr-2 text-2xl "
+                  className="mr-2 text-2xl opacity-50 "
                 />
-                <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                <div className="bg-red-500 text-white font-bold rounded-full px-2 opacity-50 ">
                   {cartItemCount}
                 </div>
               </div>
