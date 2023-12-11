@@ -98,7 +98,25 @@ const History = () => {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <div className="bg-white p-4 rounded shadow-md">
+          <div className="animate-pulse">
+            <div className="flex items-center border-b mb-4">
+              <div className="w-8 h-8 bg-gray-300 rounded-full mr-2"></div>
+              <div className="flex-1">
+                <div className="w-20 h-4 bg-gray-300 rounded mb-1"></div>
+                <div className="w-16 h-2 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+
+            <div className="flex items-center border-b mb-4">
+              <div className="w-8 h-8 bg-gray-300 rounded-full mr-2"></div>
+              <div className="flex-1">
+                <div className="w-20 h-4 bg-gray-300 rounded mb-1"></div>
+                <div className="w-16 h-2 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="overflow-x-auto">
           {shoppingHistory.length === 0 ? (
