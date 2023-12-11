@@ -14,7 +14,7 @@ const History = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/");
+      navigate("/history");
     }
   }, [navigate]);
 
@@ -44,7 +44,7 @@ const History = () => {
     };
 
     fetchHistory();
-  }, [username, navigate]);
+  }, [username]);
 
   const convertToUSD = (price) => {
     const exchangeRate = 15000;
