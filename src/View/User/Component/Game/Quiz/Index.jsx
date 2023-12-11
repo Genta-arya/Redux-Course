@@ -52,7 +52,7 @@ function QuizApp() {
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
-    document.title = `OmYoo-Studio | PlayGame`;
+    document.title = `IKKEA | PlayGame`;
   });
 
 
