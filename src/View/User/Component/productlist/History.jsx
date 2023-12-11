@@ -13,8 +13,8 @@ const History = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/history");
+    if (!token) {
+      navigate("/");
     }
   }, [navigate]);
 
