@@ -89,7 +89,9 @@ const Navbar = () => {
   return (
     <div className="bg-gray-800 p-4 w-screen">
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
-        <div className="text-white text-lg font-bold">IKKEA SHOP</div>
+        <div className="text-white text-lg font-bold lg:block md:block hidden">
+          IKKEA SHOP
+        </div>
         <div className="lg:hidden md:hidden">
           <FontAwesomeIcon
             icon={faBars}
@@ -102,39 +104,46 @@ const Navbar = () => {
         </div>
         <div className="flex gap-12">
           {localStorage.getItem("token") ? (
-            <div className="text-white flex items-center ml-4">
-              <FontAwesomeIcon
-                icon={faShoppingCart}
-                className="mr-2 text-2xl cursor-pointer"
-                onClick={openCartModal}
-              />
-              <div className="bg-red-500 text-white font-bold rounded-full px-2">
-                {cartItemCount}
+            <div className=" items-center md:block lg:block mt-2 hidden">
+              <div className="text-white flex items-center ml-4  ">
+                <FontAwesomeIcon
+                  icon={faShoppingCart}
+                  className="mr-2 text-2xl cursor-pointer"
+                  onClick={openCartModal}
+                />
+                <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                  {cartItemCount}
+                </div>
               </div>
             </div>
           ) : (
-            <div className="text-white flex items-center ml-4 opacity-50">
-              <FontAwesomeIcon
-                icon={faShoppingCart}
-                className="mr-2 text-2xl "
-              />
-              <div className="bg-red-500 text-white font-bold rounded-full px-2">
-                {cartItemCount}
+            <div className="mt-2 md:block lg:block hidden">
+              <div className="text-white flex items-center ml-4 opacity-50 ">
+                <FontAwesomeIcon
+                  icon={faShoppingCart}
+                  className="mr-2 text-2xl "
+                />
+                <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                  {cartItemCount}
+                </div>
               </div>
             </div>
           )}
 
           {localStorage.getItem("token") ? (
-            <div className="avatar online" onClick={handleClickAvatar}>
-              <div className="w-10 rounded-full overflow-hidden">
+            <div
+              className="avatar online md:block lg:block "
+              onClick={handleClickAvatar}
+            >
+              <div className="w-10 rounded-full overflow-hidden  ">
                 <img
                   src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
                   alt="Avatar"
-                  className="w-full h-full object-cover cursor-pointer"
+                  className="lg:w-full lg:h-full md:w-full md:h-full   object-cover cursor-pointer "
                 />
               </div>
               {isDropdownOpen && (
-                <div className="absolute top-12 right-4  h-auto">
+                <div className="absolute lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-auto">
                   <ul className="bg-white  p-2 rounded-md shadow-md">
                     <li
                       className="text-center justify-center items-center flex cursor-pointer"
@@ -148,7 +157,7 @@ const Navbar = () => {
             </div>
           ) : (
             <h1
-              className="text-white text-lg font-bold cursor-pointer"
+              className="text-white text-lg font-bold cursor-pointer mt-1"
               onClick={handleLogin}
             >
               Login
@@ -171,17 +180,33 @@ const Navbar = () => {
 
       {isMobileMenuOpen && (
         <div className="text-white text-center py-2 mt-12">
-          <div className="flex text-black justify-between ">
+          <div className="flex text-black justify-between">
             <SearchInput />
-            <div className="text-white flex items-center  justify-end ml-4">
-              <FontAwesomeIcon
-                icon={faShoppingCart}
-                className="mr-2 text-2xl cursor-pointer"
-                onClick={openCartModal}
-              />
-              <div className="bg-red-500 text-white font-bold rounded-full px-2">
-                {cartItemCount}
-              </div>
+            <div className="text-white flex items-center justify-end ml-4 ">
+              {localStorage.getItem("token") ? (
+                <React.Fragment>
+                  <FontAwesomeIcon
+                    icon={faShoppingCart}
+                    className="mr-2 text-2xl cursor-pointer"
+                    onClick={openCartModal}
+                  />
+                  <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                    {cartItemCount}
+                  </div>
+                </React.Fragment>
+              ) : (
+                <div className="mt-2">
+                  <div className="text-white flex items-center ml-4 opacity-50 ">
+                    <FontAwesomeIcon
+                      icon={faShoppingCart}
+                      className="mr-2 text-2xl "
+                    />
+                    <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                      {cartItemCount}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
