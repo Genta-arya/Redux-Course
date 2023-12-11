@@ -1,0 +1,26 @@
+.slot-machine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .slot {
+    font-size: 2em;
+    padding: 20px;
+    transition: transform 2s ease-in-out;
+  }
+  
+  .spin {
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotateX(0deg);
+    }
+    100% {
+      transform: rotateX(360deg);
+    }
+  }
+  

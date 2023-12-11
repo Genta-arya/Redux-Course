@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faBars , faGamepad } from "@fortawesome/free-solid-svg-icons";
 import {
   selectCartItems,
   clearCart,
@@ -25,6 +25,11 @@ const Navbar = () => {
   const openCartModal = () => {
     setCartModalOpen(true);
   };
+
+  const openGame = () => {
+    navigate("/game")
+  };
+
 
   const closeCartModal = () => {
     setCartModalOpen(false);
@@ -182,9 +187,15 @@ const Navbar = () => {
         <div className="text-white text-center py-2 mt-12">
           <div className="flex text-black justify-between">
             <SearchInput />
-            <div className="text-white flex items-center justify-end ml-4 ">
+            <div className="text-white flex items-center justify-end ml-4 gap-2 ">
               {localStorage.getItem("token") ? (
                 <React.Fragment>
+                  <FontAwesomeIcon
+                    icon={faGamepad}
+                    className="mr-2 text-2xl cursor-pointer"
+                    onClick={openGame}
+                  />
+                 
                   <FontAwesomeIcon
                     icon={faShoppingCart}
                     className="mr-2 text-2xl cursor-pointer"

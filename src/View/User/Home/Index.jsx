@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./Component/Navbar";
-import Content from "./Component/Content";
-import Footer from "./Component/Footer";
+import Navbar from "../Component/Navbar";
+import Content from "../Component/Content";
+import Footer from "../Component/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import FooterDaisy from "./Component/FooterDaisy";
+import FooterDaisy from "../Component/FooterDaisy";
 
 const HomePage = () => {
   const [showScroll, setShowScroll] = useState(false);
