@@ -24,6 +24,7 @@ const Register = () => {
   const [loginErrorServer, setLoginErrorServer] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -75,6 +76,10 @@ const Register = () => {
     }
 
     setIsLoading(false);
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -159,6 +164,7 @@ const Register = () => {
               "Register"
             )}
           </button>
+          <div className="flex justify-center hover:underline p-2 cursor-pointer " onClick={handleLogin}>Back to login</div>
         </form>
       </div>
       <ToastContainer />
