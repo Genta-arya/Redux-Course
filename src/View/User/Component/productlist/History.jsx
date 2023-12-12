@@ -26,7 +26,7 @@ const History = () => {
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const socket = io("http://localhost:3001");
+    const socket = io("https://api-ikkea-v1.vercel.app/");
   
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
@@ -37,6 +37,7 @@ const History = () => {
     });
   
     socket.on("shoppingHistoryUpdate", (updatedHistory) => {
+
       const mergedHistory = mergeItemsWithSameProductName(
         updatedHistory.paymentHistory || []
       );
