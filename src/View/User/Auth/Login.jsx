@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { API_ENDPOINTS, login } from "../../../service/API";
 import useAuthCheck from "../../../service/AuthHook";
+import { selectIsAuthenticated } from "../Component/productlist/fitur/AuthSlice";
+import { useSelector } from "react-redux";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -29,8 +31,7 @@ const LoginForm = () => {
   const [newPassword, setNewPassword] = useState("");
   const [isNewPasswordModalOpen, setIsNewPasswordModalOpen] = useState(false);
   const navigate = useNavigate();
-
-  useAuthCheck();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   useEffect(() => {
     localStorage.setItem("token", tokenJWT);

@@ -11,7 +11,7 @@ import useAuthCheck from "../../../service/AuthHook";
 const HomePage = () => {
   const [showScroll, setShowScroll] = useState(false);
   const navigate = useNavigate();
-  useAuthCheck();
+  // useAuthCheck();
 
   useEffect(() => {
     const handleScroll = () => {

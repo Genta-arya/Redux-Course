@@ -18,6 +18,8 @@ import CartModalContent from "./chart";
 import SearchInput from "./Search";
 import { useNavigate } from "react-router-dom";
 import BottomNav from "./BottomNav";
+import { selectIsAuthenticated, setAuthenticated } from "./productlist/fitur/AuthSlice";
+import { verifJWT } from "../../../service/API";
 
 const Navbar = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
@@ -27,6 +29,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const cartItemCount = cartItems.length;
 
   const openCartModal = () => {
@@ -67,11 +70,32 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setDropdownOpen(false);
-    }
-  }, []);
+    const fetchData = async () => {
+      try {
+        const data = await verifJWT();
+
+        if (data.isLogin) {
+          console.log("User is logged in");
+          dispatch(setAuthenticated(true));
+          setDropdownOpen(false)
+        } else {
+          console.log("User is not logged in");
+          dispatch(setAuthenticated(false));
+        }
+      } catch (error) {
+      
+      }
+    };
+
+    fetchData();
+  }, [dispatch, navigate]);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setDropdownOpen(false);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -109,7 +133,7 @@ const Navbar = () => {
           <SearchInput />
         </div>
         <div className="flex gap-12">
-          {localStorage.getItem("token") ? (
+          {isAuthenticated ? (
             <div className=" items-center md:hidden lg:block mt-2 hidden ">
               <div className="text-white flex items-center ml-4  ">
                 <FontAwesomeIcon
@@ -156,7 +180,7 @@ const Navbar = () => {
             </div>
           )}
 
-          {localStorage.getItem("token") ? (
+          {isAuthenticated ? (
             <div
               className="avatar online md:block lg:block "
               onClick={handleClickAvatar}
@@ -215,7 +239,7 @@ const Navbar = () => {
               openHistory={openHistory}
               openCartModal={openCartModal}
               cartItemCount={cartItemCount}
-              isAuthenticated={localStorage.getItem("token")}
+              isAuthenticated={isAuthenticated}
             />
           </div>
         </div>

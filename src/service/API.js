@@ -15,6 +15,7 @@ const API_ENDPOINTS = {
   UpdatePassword: `${API_BASE_URL}update-password`,
   CheckUser: `${API_BASE_URL}get-username`,
   Gethistory: `${API_BASE_URL}get-history`,
+  CekJWT: `${API_BASE_URL}jwt`,
 };
 
 const register = async (username, email, password) => {
@@ -53,4 +54,29 @@ const login = async (email, password) => {
   }
 };
 
-export { API_ENDPOINTS, register, login };
+const verifJWT = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    console.log("ini token:" ,token)
+
+    const response = await fetch("http://localhost:3001/jwt", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+     
+    }
+  } catch (error) {
+   
+    throw error;
+  }
+};
+
+export { API_ENDPOINTS, register, login, verifJWT };

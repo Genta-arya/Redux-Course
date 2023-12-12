@@ -1,37 +1,42 @@
 // AuthHook.js
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setAuthenticated } from '../View/User/Component/productlist/fitur/AuthSlice';
+
 
 const useAuthCheck = () => {
-  const navigation = useNavigate(); 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
 
-        const response = await fetch("http://localhost:3001/jwt", {
-          method: "POST",
+        const response = await fetch('http://localhost:3001/jwt', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ token }),
         });
 
         if (!response.ok) {
-          console.log("auth not valid");
-
-          navigation("/login");
+          console.log('auth not valid');
+          dispatch(setAuthenticated(false));
+          navigate('/shop');
         } else {
-          navigation("/shop");
+          dispatch(setAuthenticated(true));
+         
         }
       } catch (error) {
-        console.error("Error verifying token:", error);
+        console.error('Error verifying token:', error);
       }
     };
 
     fetchData();
-  }, [navigation]);
+  }, [dispatch, navigate]);
 };
 
 export default useAuthCheck;

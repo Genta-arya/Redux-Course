@@ -12,10 +12,11 @@ import {
   setShoppingHistory,
   setSortOrder,
   setSortType,
-  setTotalHistory,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
 import useAuthCheck from "../../../../service/AuthHook";
+import {  setAuthenticated } from "./fitur/AuthSlice";
+
 
 const History = () => {
   const dispatch = useDispatch();
@@ -27,8 +28,7 @@ const History = () => {
   const totalHistory = useSelector(selectTotalHistory);
 
   const username = localStorage.getItem("username");
-
-  useAuthCheck();
+  useAuthCheck()
 
   const mergeItemsWithSameProductName = (history) => {
     const mergedHistory = [];

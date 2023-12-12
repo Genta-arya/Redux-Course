@@ -29,6 +29,8 @@ import CategoryFilter from "../Category";
 import Skeleton from "./skleton";
 import Rating from "../Rating";
 import SortFitur from "../SortFitur";
+import { selectIsAuthenticated, setAuthenticated } from "./fitur/AuthSlice";
+import { verifJWT } from "../../../../service/API";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -50,7 +52,7 @@ const ProductList = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const fetchData = async () => {
     try {
       const response = await axios.get("https://fakestoreapi.com/products");
@@ -65,6 +67,26 @@ const ProductList = () => {
   useEffect(() => {
     fetchData();
   }, [dispatch]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await verifJWT();
+
+        if (data.isLogin) {
+          console.log("User is logged in");
+          dispatch(setAuthenticated(true));
+        } else {
+          console.log("User is not logged in");
+          dispatch(setAuthenticated(false));
+        }
+      } catch (error) {
+      
+      }
+    };
+
+    fetchData();
+  }, [dispatch, navigate]);
 
   const openCartModal = () => setCartModalOpen(true);
   const closeCartModal = () => setCartModalOpen(false);
@@ -129,9 +151,7 @@ const ProductList = () => {
               </div>
               <button
                 className={`bg-black text-white w-full px-4 py-2  mt-4 rounded  hover:scale-105 transition-all duration-500 ease-out ${
-                  localStorage.getItem("token")
-                    ? "hover:bg-gray-800"
-                    : "bg-gray-300 "
+                  isAuthenticated ? "hover:bg-gray-800" : "bg-gray-300 "
                 }`}
                 onClick={() => {
                   const token = localStorage.getItem("token");
@@ -140,7 +160,7 @@ const ProductList = () => {
                     openCartModal();
                   }
                 }}
-                disabled={!localStorage.getItem("token")}
+                disabled={!isAuthenticated}
               >
                 <FontAwesomeIcon
                   icon={faShoppingCart}
