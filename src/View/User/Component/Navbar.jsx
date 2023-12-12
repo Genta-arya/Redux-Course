@@ -129,9 +129,14 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gray-800 p-4 w-screen">
+    <div className="bg-gray-800 p-4 w-screen ">
+
+     
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
+        <div>
+
         <div className="text-white text-lg font-bold lg:block shines cursor-pointer"onClick={handleClick}>HKKS STORE</div>
+        </div>
 
         <div className="hidden lg:flex md:hidden items-center">
           <SearchInput />
@@ -233,7 +238,7 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="text-white text-center py-2 mt-12 lg:hidden md:block block">
+        <div className="  text-white text-center py-2 mt-12 lg:hidden md:block block">
           <div className="flex text-black justify-center">
             <SearchInput />
           </div>

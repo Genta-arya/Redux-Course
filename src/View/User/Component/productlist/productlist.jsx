@@ -80,9 +80,7 @@ const ProductList = () => {
           console.log("User is not logged in");
           dispatch(setAuthenticated(false));
         }
-      } catch (error) {
-      
-      }
+      } catch (error) {}
     };
 
     fetchData();
@@ -109,14 +107,17 @@ const ProductList = () => {
     <div className="w-screen">
       {/* Filter and Sort Section */}
       {!loading && (
-        <div className="lg:flex items-center grid grid-cols-1 gap-4 p-4 bg-gray-800 w-screen border-t-2 border-white">
-          <CategoryFilter />
+        <div className="bg-gray-800 p-4">
+          <div className="lg:flex md:flex justify-around grid grid-flow-col-1">
+            <CategoryFilter />
+          </div>
           <SortFitur />
         </div>
       )}
 
       {/* Product Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 md:p-3 w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:p-3 w-full">
+      
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
         ) : filteredAndSortedProducts.length === 0 ? (
@@ -126,9 +127,10 @@ const ProductList = () => {
         ) : (
           filteredAndSortedProducts.map((product) => (
             <div
-              className="shadow-2xl drop-shadow-2xl shadow-black mt-12 py-12 bg-white  rounded-xl px-6 md:px-12 p-4 h-auto w-[90%] md:w-[95%] lg:w-[90%] text-center mx-auto mb-8 flex flex-col justify-between"
+              className="shadow-2xl drop-shadow-2xl shadow-black mt-8 py-12 bg-white  rounded-xl px-6 md:px-12  h-auto w-[95%] md:w-[95%] lg:w-[90%] text-center mx-auto mb-8 flex flex-col justify-between "
               key={product.id}
             >
+               
               <div className="overflow-hidden relative mx-auto w-full group">
                 <img
                   src={product.image}

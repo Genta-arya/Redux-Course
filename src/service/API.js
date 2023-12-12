@@ -59,7 +59,7 @@ const verifJWT = async () => {
     const token = localStorage.getItem("token");
     console.log("ini token:" ,token)
 
-    const response = await fetch("http://localhost:3001/jwt", {
+    const response = await fetch(API_ENDPOINTS.CekJWT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
