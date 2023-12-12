@@ -13,7 +13,6 @@ import {
   setSortType,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
-import { io } from "socket.io-client";
 
 const History = () => {
   const dispatch = useDispatch();
@@ -26,46 +25,18 @@ const History = () => {
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const socket = io("http://localhost:3001");
-  
-    socket.on("connect", () => {
-      console.log("Connected to Socket.IO server");
-    });
-  
-    socket.on("disconnect", () => {
-      console.log("Disconnected from Socket.IO server");
-    });
-  
-    socket.on("shoppingHistoryUpdate", (updatedHistory) => {
-
-      const mergedHistory = mergeItemsWithSameProductName(
-        updatedHistory.paymentHistory || []
-      );
-      dispatch(setShoppingHistory(mergedHistory));
-    });
-  
-    return () => {
-      socket.disconnect();
-    };
-  }, [dispatch]);
-  
-
-  useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/");
     }
   }, [navigate]);
 
-
   const mergeItemsWithSameProductName = (history) => {
     const mergedHistory = [];
 
     history.forEach((item) => {
       const existingItemIndex = mergedHistory.findIndex(
-        (mergedItem) =>
-          mergedItem.nm_product === item.nm_product &&
-          mergedItem.status === item.status
+        (mergedItem) => mergedItem.nm_product === item.nm_product
       );
 
       if (existingItemIndex !== -1) {
