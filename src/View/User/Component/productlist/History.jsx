@@ -15,6 +15,7 @@ import {
   setTotalHistory,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
+import useAuthCheck from "../../../../service/AuthHook";
 
 const History = () => {
   const dispatch = useDispatch();
@@ -27,12 +28,7 @@ const History = () => {
 
   const username = localStorage.getItem("username");
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/");
-    }
-  }, [navigate]);
+  useAuthCheck();
 
   const mergeItemsWithSameProductName = (history) => {
     const mergedHistory = [];
@@ -179,7 +175,6 @@ const History = () => {
             </button>
           </div>
 
-         
           {shoppingHistory.length === 0 ? (
             <p>No shopping history available.</p>
           ) : (

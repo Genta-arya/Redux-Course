@@ -10,9 +10,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { API_ENDPOINTS, login } from "../../../service/API";
-
-
-
+import useAuthCheck from "../../../service/AuthHook";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -26,19 +24,17 @@ const LoginForm = () => {
 
   const [isEnterOTPOpen, setIsEnterOTPOpen] = useState(false);
   const [otp, setOTP] = useState("");
+  const [tokenJWT, setJWT] = useState("");
+
   const [newPassword, setNewPassword] = useState("");
   const [isNewPasswordModalOpen, setIsNewPasswordModalOpen] = useState(false);
   const navigate = useNavigate();
 
-
-  
+  useAuthCheck();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/");
-    }
-  }, [navigate]);
+    localStorage.setItem("token", tokenJWT);
+  }, [tokenJWT]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -48,7 +44,6 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
@@ -59,15 +54,15 @@ const LoginForm = () => {
 
     try {
       const response = await login(email, password);
-      console.log(response)
 
       if (response.status === 200) {
-        const { token } = response;
+        console.log(response.data.token);
 
         setLoginError("");
         setLoginErrorServer("");
-        localStorage.setItem("token", token);
-        console.log(token)
+        setJWT(response.data.token);
+
+        console.log(tokenJWT);
 
         const usernameResponse = await fetch(`${API_ENDPOINTS.CheckUser}`, {
           method: "POST",
@@ -100,7 +95,7 @@ const LoginForm = () => {
   };
 
   const handleRegister = () => {
-    navigate('/register')
+    navigate("/register");
   };
 
   const closeForgotPasswordModal = () => {
@@ -230,9 +225,7 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-400 p-5">
       <div className="bg-white w-full sm:w-4/5 md:w-3/5 lg:w-2/5 xl:w-1/4 p-8 rounded-3xl shadow-2xl drop-shadow-2xl shadow-black border-2 border-black">
-        <div className="text-center mb-6 font-extrabold">
-        HKKS LOGIN
-        </div>
+        <div className="text-center mb-6 font-extrabold">HKKS LOGIN</div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
             <label className="block text-gray-600 mt-12">
@@ -320,7 +313,7 @@ const LoginForm = () => {
           <div className="fixed top-0 left-0 w-full h-full flex items-center rounded-3xl justify-center bg-gray-600 bg-opacity-75 z-50 ">
             <div className="bg-white w-full  p-8 rounded-2xl shadow-2xl">
               <h2 className="text-xl font-semibold mb-4">Lupa Password</h2>
-              
+
               <p className="text-gray-600 mb-4">
                 Masukkan email Anda dan kami akan mengirimkan OTP untuk mengatur
                 ulang kata sandi Anda.

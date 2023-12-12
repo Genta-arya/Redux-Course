@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import Content from "../Component/Content";
 import Footer from "../Component/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import FooterDaisy from "../Component/FooterDaisy";
+import useAuthCheck from "../../../service/AuthHook";
 
 const HomePage = () => {
   const [showScroll, setShowScroll] = useState(false);
+  const navigate = useNavigate();
+  useAuthCheck();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +32,8 @@ const HomePage = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+
 
   return (
     <div className="mx-auto">
