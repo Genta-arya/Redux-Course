@@ -26,7 +26,7 @@ const History = () => {
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    const socket = io("https://api-ikkea-v1.vercel.app/");
+    const socket = io("http://localhost:3001");
   
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
