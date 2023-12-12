@@ -49,30 +49,38 @@ const History = () => {
     return mergedHistory;
   };
 
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const response = await axios.post(`${API_ENDPOINTS.Gethistory}`, {
-          username,
-        });
+  const fetchHistory = async () => {
+    try {
+      const response = await axios.post(`${API_ENDPOINTS.Gethistory}`, {
+        username,
+      });
 
-        if (response.status === 200) {
-          const data = response.data;
-          const mergedHistory = mergeItemsWithSameProductName(
-            data.paymentHistory || []
-          );
-          dispatch(setShoppingHistory(mergedHistory));
-        } else {
-          console.error("Failed to fetch shopping history");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
+      if (response.status === 200) {
+        const data = response.data;
+        const mergedHistory = mergeItemsWithSameProductName(
+          data.paymentHistory || []
+        );
+        dispatch(setShoppingHistory(mergedHistory));
+      } else {
+        console.error("Failed to fetch shopping history");
       }
-    };
-
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+   
     fetchHistory();
+
+    const intervalId = setInterval(() => {
+      fetchHistory();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [username, dispatch]);
 
   const convertToUSD = (price) => {
