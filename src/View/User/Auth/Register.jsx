@@ -80,7 +80,7 @@ const Register = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-400 p-5">
       <div className="bg-white w-full sm:w-4/5 md:w-3/5 lg:w-2/5 xl:w-1/4 p-8 rounded-3xl shadow-2xl drop-shadow-2xl shadow-black border-2 border-black">
-        <div className="text-center mb-6 font-extrabold">IKKEA Register</div>
+        <div className="text-center mb-6 font-extrabold">HKKS Register</div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
             <label className="block text-gray-600 mt-4">

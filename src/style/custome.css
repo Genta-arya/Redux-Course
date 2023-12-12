@@ -1,0 +1,185 @@
+.wave-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px; /* Sesuaikan dengan tinggi gelombang yang diinginkan */
+    background: linear-gradient(to right, #3E6EA5, transparent);
+    z-index: -1; /* Mengatur agar gelombang berada di belakang konten */
+    clip-path: polygon(0 0, 100% 100%, 100% 0);
+  }
+  
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in-out 1;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shine::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 30%,
+      transparent 100%
+    );
+    animation: shine-animation 5s infinite linear;
+    -webkit-animation: shine-animation 5s infinite linear;
+  }
+  
+  @keyframes shine-animation {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+  
+  .shines {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shines::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 30%,
+      transparent 100%
+    );
+    animation: shine-animation 5s infinite linear;
+    -webkit-animation: shine-animation 5s infinite linear;
+  }
+  
+  @keyframes shine-animation {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+  
+  @keyframes shimmer-animation {
+    0% {
+      background-position: 100%;
+    }
+    100% {
+      background-position: -100%;
+    }
+  }
+  
+  .text-shimmer {
+    background: linear-gradient(90deg, transparent, #fcd34d, transparent);
+    background-size: 200% 100%;
+    animation: shimmer-animation 1.5s infinite;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .pulse {
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .rotate {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .rotate:hover {
+    transform: rotate(360deg);
+  }
+  
+  .mobile-carousel {
+    margin-top: 20px;
+  }
+  
+  .mobile-carousel .carousel .slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    padding: 10px;
+  }
+  
+  .mobile-carousel .carousel .slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
+  .sidebar {
+    transition: transform 0.5s ease-in-out;
+  
+    -webkit-transition: transform 0.3s ease-in-out;
+    -moz-transition: transform 0.3s ease-in-out;
+    -ms-transition: transform 0.3s ease-in-out;
+    -o-transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar-button {
+    transition: transform 0.3s ease-in-out; 
+  }
+  
+  .sidebar-open .sidebar-button {
+    transform: rotate(180deg);
+  }
