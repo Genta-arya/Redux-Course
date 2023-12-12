@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import BottomNav from "./BottomNav";
 import { selectIsAuthenticated, setAuthenticated } from "./productlist/fitur/AuthSlice";
 import { verifJWT } from "../../../service/API";
-
+import "../../../style/custome.css"
 const Navbar = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(true);
@@ -124,10 +124,14 @@ const Navbar = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  const handleClick = () => {
+    navigate("/")
+  };
+
   return (
     <div className="bg-gray-800 p-4 w-screen">
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
-        <div className="text-white text-lg font-bold lg:block ">HKKS STORE</div>
+        <div className="text-white text-lg font-bold lg:block shines cursor-pointer"onClick={handleClick}>HKKS STORE</div>
 
         <div className="hidden lg:flex md:hidden items-center">
           <SearchInput />

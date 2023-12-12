@@ -17,7 +17,7 @@ const Category = () => {
 
   return (
     <div className="grid grid-cols-1 justify-start gap-4 ">
-      <label className="text-white ">Pilih Kategori:</label>
+      <label className="text-white ">Category:</label>
       <select
         value={selectedCategory}
         onChange={(e) => {

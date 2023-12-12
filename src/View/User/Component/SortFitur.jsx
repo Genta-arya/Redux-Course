@@ -12,7 +12,7 @@ const SortFitur = () => {
 
   return (
     <div className="grid grid-cols-1 justify-start gap-4 ">
-      <label className="text-white ">Urutkan:</label>
+      <label className="text-white ">Sort:</label>
       <select
         value={charter}
         onChange={(e) => handleCharterChange(e.target.value)}
