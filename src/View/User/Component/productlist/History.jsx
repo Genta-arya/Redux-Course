@@ -36,7 +36,9 @@ const History = () => {
 
     history.forEach((item) => {
       const existingItemIndex = mergedHistory.findIndex(
-        (mergedItem) => mergedItem.nm_product === item.nm_product
+        (mergedItem) =>
+          mergedItem.nm_product === item.nm_product &&
+          mergedItem.status === item.status
       );
 
       if (existingItemIndex !== -1) {
@@ -71,7 +73,6 @@ const History = () => {
     }
   };
   useEffect(() => {
-   
     fetchHistory();
 
     const intervalId = setInterval(() => {
@@ -99,6 +100,25 @@ const History = () => {
 
   const sortShoppingHistoryHandler = () => {
     dispatch(sortShoppingHistory());
+  };
+
+  const getStatusColorClass = (status) => {
+    switch (status) {
+      case "pending":
+        return "text-orange-500";
+      case "settled":
+        return "text-green-500";
+      case "failed":
+        return "text-red-500";
+
+      case "canceled":
+        return "text-red-500";
+      case "expired":
+        return "text-red-500";
+
+      default:
+        return "";
+    }
   };
 
   return (
@@ -177,7 +197,11 @@ const History = () => {
                 {shoppingHistory.map((historyItem, index) => (
                   <tr key={index}>
                     <td className="py-2 px-4 border-b">{index + 1}</td>
-                    <td className="py-2 px-4 border-b">
+                    <td
+                      className={`py-2 px-4 border-b ${getStatusColorClass(
+                        historyItem.status
+                      )}`}
+                    >
                       {historyItem.nm_product}
                     </td>
                     <td className="py-2 px-4 border-b">
@@ -194,7 +218,13 @@ const History = () => {
                     <td className="py-2 px-4 border-b">
                       {formatTime(historyItem.time)}
                     </td>
-                    <td className="py-2 px-4 border-b">{historyItem.status}</td>
+                    <td
+                      className={`py-2 px-4 border-b ${getStatusColorClass(
+                        historyItem.status
+                      )}`}
+                    >
+                      {historyItem.status}
+                    </td>
                   </tr>
                 ))}
               </tbody>
