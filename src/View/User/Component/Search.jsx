@@ -18,7 +18,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className="flex items-center rounded-md overflow-hidden bg-white shadow-md">
+    <div className="flex items-center rounded-xl overflow-hidden bg-white shadow-md w-[80%] md:w-[60%] lg:w-full">
       <span className="px-3">
         <FontAwesomeIcon icon={faSearch} className="text-gray-500" />
       </span>

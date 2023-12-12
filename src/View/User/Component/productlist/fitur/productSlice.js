@@ -58,7 +58,10 @@ export const productSlice = createSlice({
         compare(a, b, action.payload, state.sortOrder)
       );
     },
+
+
   },
+  
 });
 
 export const {

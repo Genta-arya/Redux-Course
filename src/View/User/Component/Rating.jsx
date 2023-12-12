@@ -36,8 +36,8 @@ const Rating = ({ productId }) => {
   }
 
   return (
-    <div className="flex items-center">
-      <div className="flex items-center">
+    <div className="grid justify-center items-center lg:flex md:flex lg:text-base md:text-sm text-sm">
+      <div className="flex items-center ">
         {stars.length > 0 ? (
           <>
             {stars.map((star, index) => (
@@ -48,7 +48,7 @@ const Rating = ({ productId }) => {
           <span className="text-gray-500">No reviews</span>
         )}
       </div>
-      <span className="ml-1 text-gray-500">({count} reviews)</span>
+      <span className="ml-1 text-gray-500">{count} reviews</span>
     </div>
   );
 };

@@ -69,7 +69,7 @@ const Navbar = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setDropdownOpen(true);
+      setDropdownOpen(false);
     }
   }, []);
 
