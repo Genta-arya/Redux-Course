@@ -39,21 +39,24 @@ const Category = () => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    infinite: false,
     arrows: window.innerWidth >= 1000,
+    autoplay: window.innerWidth >= 1000,
+    autoplaySpeed: 2000,
     responsive: [
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
           arrows: false,
+          autoplay: window.innerWidth >= 1000, // Adjust autoplay based on the window width
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           arrows: false,
+          autoplay: window.innerWidth >= 1000, // Adjust autoplay based on the window width
         },
       },
     ],
@@ -86,7 +89,7 @@ const Category = () => {
                 className={`category-item w-[90%] lg:w-[90%] md:w-[90%] lg:h-28 md:h-28 h-16 rounded-xl font-serif font-bold relative text-xl ${
                   selectedCategory === category
                     ? "text-white transform transition-all duration-300 rounded-lg text-xs"
-                    : "rainbow-bg text-white transform scale-100 transition-all duration-200 hover:transform hover:scale-90 hover:transition-all hover:duration-300 rounded-lg text-xs"
+                    : "rainbow-bg text-white transform scale-100 transition-all duration-300 hover:transform hover:scale-90 hover:transition-all hover:duration-300 rounded-lg text-xs"
                 } transition duration-300 ease-in-out rounded-lg `}
                 style={{
                   backgroundColor:
