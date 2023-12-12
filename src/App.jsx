@@ -9,12 +9,13 @@ import Register from "./View/User/Auth/Register";
 import SlotMachine from "./View/User/Component/Game/Slot/Slot";
 import GameList from "./View/User/Component/Game/Index";
 import QuizApp from "./View/User/Component/Game/Quiz/Index";
+import IndexLp from "./View/User/Home/Component/Index";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<HomePage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/slot" element={<SlotMachine />} />
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/game" element={<GameList />} />
         <Route path="/history" element={<History/>} />
         <Route path="/Error" element={<ErrorPage />} />
+        <Route path="/" element={<IndexLp />} />
         <Route path="*" element={<DetailNotFound />} />
       </Routes>
     </BrowserRouter>

@@ -80,7 +80,7 @@ const LoginForm = () => {
         if (usernameResponse.ok) {
           const { username } = await usernameResponse.json();
           localStorage.setItem("username", username);
-          navigate("/");
+          navigate("/shop");
         }
       } else if (response.status === 401) {
         setLoginError("Email atau password salah");

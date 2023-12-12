@@ -8,9 +8,11 @@ import {
   selectShoppingHistory,
   selectSortOrder,
   selectSortType,
+  selectTotalHistory,
   setShoppingHistory,
   setSortOrder,
   setSortType,
+  setTotalHistory,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
 
@@ -21,6 +23,7 @@ const History = () => {
   const sortType = useSelector(selectSortType);
   const sortOrder = useSelector(selectSortOrder);
   const shoppingHistory = useSelector(selectShoppingHistory);
+  const totalHistory = useSelector(selectTotalHistory);
 
   const username = localStorage.getItem("username");
 
@@ -95,7 +98,7 @@ const History = () => {
   };
 
   const navigateToHome = () => {
-    navigate("/");
+    navigate("/shop");
   };
 
   const sortShoppingHistoryHandler = () => {
@@ -176,7 +179,7 @@ const History = () => {
             </button>
           </div>
 
-          {/* Tabel Riwayat Belanja */}
+         
           {shoppingHistory.length === 0 ? (
             <p>No shopping history available.</p>
           ) : (

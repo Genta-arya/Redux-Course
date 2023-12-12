@@ -10,6 +10,7 @@ export const sortHistorySlice = createSlice({
     sortType: "name",
     sortOrder: "asc",
     shoppingHistory: [],
+    totalHistory: 0,
   },
   reducers: {
     setSortType: (state, action) => {
@@ -33,6 +34,7 @@ export const {
   setSortType,
   setSortOrder,
   setShoppingHistory,
+  setTotalHistory,
   sortShoppingHistory,
 } = sortHistorySlice.actions;
 
@@ -40,5 +42,6 @@ export const selectSortType = (state) => state.sortHistory.sortType;
 export const selectSortOrder = (state) => state.sortHistory.sortOrder;
 export const selectShoppingHistory = (state) =>
   state.sortHistory.shoppingHistory;
+export const selectTotalHistory = (state) => state.sortHistory.totalHistory;
 
 export default sortHistorySlice.reducer;

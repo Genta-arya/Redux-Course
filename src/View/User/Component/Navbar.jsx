@@ -103,7 +103,7 @@ const Navbar = () => {
   return (
     <div className="bg-gray-800 p-4 w-screen">
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
-        <div className="text-white text-lg font-bold lg:block ">IKKEA SHOP</div>
+        <div className="text-white text-lg font-bold lg:block ">HKKS STORE</div>
 
         <div className="hidden lg:flex md:hidden items-center">
           <SearchInput />
@@ -122,6 +122,7 @@ const Navbar = () => {
                   className="mr-12 text-2xl cursor-pointer"
                   onClick={openHistory}
                 />
+               
                 <FontAwesomeIcon
                   icon={faShoppingCart}
                   className="mr-2 text-2xl cursor-pointer"
