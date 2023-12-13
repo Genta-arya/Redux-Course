@@ -5,6 +5,7 @@ import {
   faMinus,
   faPlus,
   faTimes,
+  faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import styles from "../../../style/CartModalContent.module.css";
@@ -182,7 +183,10 @@ const CartModalContent = ({
         <h2 className="text-xl font-bold mb-4 mt-8">Your Cart</h2>
 
         {cartItems.length === 0 ? (
-          <p className="text-center text-gray-600">No items in the cart</p>
+          <div className="flex flex-col items-center justify-center text-gray-600 mt-32">
+            <FontAwesomeIcon icon={faShoppingCart} className="text-5xl mb-4" />
+            <p className="text-lg">Your cart is currently empty.</p>
+          </div>
         ) : (
           cartItems.map((item) => (
             <motion.div

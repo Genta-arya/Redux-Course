@@ -31,6 +31,7 @@ import SortFitur from "../SortFitur";
 import { selectIsAuthenticated, setAuthenticated } from "./fitur/AuthSlice";
 import { verifJWT } from "../../../../service/API";
 import { motion } from "framer-motion";
+import ImageModal from "./fitur/ImageModal";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -47,7 +48,8 @@ const ProductList = () => {
 
   const charter = useSelector(selectCharter);
   const searchTerm = useSelector(selectSearchTerm);
-
+  const [isImageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -89,6 +91,10 @@ const ProductList = () => {
 
   const openCartModal = () => setCartModalOpen(true);
   const closeCartModal = () => setCartModalOpen(false);
+  const openImageModal = (imageUrl) => {
+    setSelectedImageUrl(imageUrl);
+    setImageModalOpen(true);
+  };
 
   const handleClearCart = () => dispatch(clearCart());
   const handleDecreaseQuantity = (itemId) =>
@@ -123,7 +129,7 @@ const ProductList = () => {
             <div className="text-white text-center">Products not found.</div>
           </div>
         ) : (
-          filteredAndSortedProducts.map((product,index) => (
+          filteredAndSortedProducts.map((product, index) => (
             <motion.div
               key={product.id}
               variants={{
@@ -139,7 +145,8 @@ const ProductList = () => {
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-40 md:w-full md:h-52  lg:w-full lg:h-52 object-scale-down p-4 mb-4 hover:scale-90 transition-all duration-500 ease-out"
+                  onClick={() => openImageModal(product.image)}
+                  className=" cursor-pointer w-full h-40 md:w-full md:h-52  lg:w-full lg:h-52 object-scale-down p-4 mb-4 hover:scale-90 transition-all duration-500 ease-out"
                 />
                 <p className="text-lg font-bold mb-2 lg:hidden md:hidden block">
                   {truncateDescription(product.title, 30)}
@@ -188,6 +195,12 @@ const ProductList = () => {
             closeCartModal={closeCartModal}
           />
         </div>
+      )}
+      {isImageModalOpen && (
+        <ImageModal
+          imageUrl={selectedImageUrl}
+          onClose={() => setImageModalOpen(false)}
+        />
       )}
     </div>
   );
