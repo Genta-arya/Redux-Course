@@ -20,7 +20,6 @@ import {
   selectSortOrder,
   selectCharter,
   selectSearchTerm,
-  sortByPrice,
   sortByCharacter,
 } from "./fitur/productSlice";
 
@@ -31,6 +30,7 @@ import Rating from "../Rating";
 import SortFitur from "../SortFitur";
 import { selectIsAuthenticated, setAuthenticated } from "./fitur/AuthSlice";
 import { verifJWT } from "../../../../service/API";
+import { motion } from "framer-motion";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -44,7 +44,7 @@ const ProductList = () => {
   const products = useSelector(selectProducts);
   const selectedCategory = useSelector(selectCategory);
   const cartItems = useSelector(selectCartItems);
-  const sortOrder = useSelector(selectSortOrder);
+
   const charter = useSelector(selectCharter);
   const searchTerm = useSelector(selectSearchTerm);
 
@@ -66,6 +66,7 @@ const ProductList = () => {
 
   useEffect(() => {
     fetchData();
+    console.log("cek error:", isError);
   }, [dispatch]);
 
   useEffect(() => {
@@ -105,7 +106,6 @@ const ProductList = () => {
 
   return (
     <div className="w-screen">
-      {/* Filter and Sort Section */}
       {!loading && (
         <div className="bg-gray-800 p-4">
           <div className="lg:flex md:flex justify-around grid grid-flow-col-1">
@@ -115,9 +115,7 @@ const ProductList = () => {
         </div>
       )}
 
-      {/* Product Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:p-3 w-full">
-      
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
         ) : filteredAndSortedProducts.length === 0 ? (
@@ -125,12 +123,18 @@ const ProductList = () => {
             <div className="text-white text-center">Products not found.</div>
           </div>
         ) : (
-          filteredAndSortedProducts.map((product) => (
-            <div
-              className="shadow-2xl drop-shadow-2xl shadow-black mt-8 py-12 bg-white  rounded-xl px-6 md:px-12  h-auto w-[95%] md:w-[95%] lg:w-[90%] text-center mx-auto mb-8 flex flex-col justify-between "
+          filteredAndSortedProducts.map((product,index) => (
+            <motion.div
               key={product.id}
+              variants={{
+                hidden: { opacity: 0, scale: 0.8 },
+                visible: { opacity: 1, scale: 1 },
+              }}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              className="shadow-2xl drop-shadow-2xl shadow-black mt-8 py-12 bg-white  rounded-xl px-6 md:px-12  h-auto w-[95%] md:w-[95%] lg:w-[90%] text-center mx-auto mb-8 flex flex-col justify-between "
             >
-               
               <div className="overflow-hidden relative mx-auto w-full group">
                 <img
                   src={product.image}
@@ -169,12 +173,11 @@ const ProductList = () => {
                   className="mr-2 lg:text-2xl md:text-2xl text-md "
                 />
               </button>
-            </div>
+            </motion.div>
           ))
         )}
       </div>
 
-      {/* Cart Modal */}
       {isCartModalOpen && (
         <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center z-50">
           <CartModalContent

@@ -14,7 +14,7 @@ const useAuthCheck = () => {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:3001/jwt', {
+        const response = await fetch('https://api-ikkea.vercel.app/jwt', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

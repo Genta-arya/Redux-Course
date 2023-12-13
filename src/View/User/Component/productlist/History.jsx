@@ -14,8 +14,7 @@ import {
   setSortType,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
-import useAuthCheck from "../../../../service/AuthHook";
-import {  setAuthenticated } from "./fitur/AuthSlice";
+import Chart from "./chart";
 
 
 const History = () => {
@@ -25,10 +24,8 @@ const History = () => {
   const sortType = useSelector(selectSortType);
   const sortOrder = useSelector(selectSortOrder);
   const shoppingHistory = useSelector(selectShoppingHistory);
-  const totalHistory = useSelector(selectTotalHistory);
 
   const username = localStorage.getItem("username");
-  useAuthCheck()
 
   const mergeItemsWithSameProductName = (history) => {
     const mergedHistory = [];
@@ -76,7 +73,7 @@ const History = () => {
 
     const intervalId = setInterval(() => {
       fetchHistory();
-    }, 1000);
+    }, 10000000);
 
     return () => {
       clearInterval(intervalId);
@@ -124,7 +121,7 @@ const History = () => {
     <div className="container mx-auto mt-8">
       <div className="flex mx-auto items-center gap-8 lg:p-0 md:p-0 p-3">
         <h2
-          className="text-base font-bold mb-4 cursor-pointer"
+          className="text-base font-bold mb-4 cursor-pointer px-4"
           onClick={navigateToHome}
         >
           <FaArrowLeft />
@@ -161,7 +158,7 @@ const History = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-end mb-4 px-12">
             <button
               className={`mr-2 ${sortType === "name" && "font-bold"}`}
               onClick={() => {
@@ -230,6 +227,7 @@ const History = () => {
           )}
         </div>
       )}
+      <Chart />
     </div>
   );
 };

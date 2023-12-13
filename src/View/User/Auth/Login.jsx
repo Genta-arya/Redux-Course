@@ -79,7 +79,7 @@ const LoginForm = () => {
           navigate("/shop");
         }
       } else if (response.status === 401) {
-        setLoginError("Email atau password salah");
+        setLoginErrorServer("Email atau password salah");
       } else if (response.status === 500) {
         setLoginErrorServer("Gagal Terhubung Keserver");
       }
