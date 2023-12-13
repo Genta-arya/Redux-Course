@@ -24,10 +24,19 @@ const Category = () => {
   useEffect(() => {
     const fetchColors = () => {
       const colors = uniqueCategories.map(() => {
-        const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-        return `#${randomColor}`;
+        const randomColor = getRandomColor();
+        return randomColor;
       });
       setBgColors(colors);
+    };
+
+    const getRandomColor = () => {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
     };
 
     fetchColors();
