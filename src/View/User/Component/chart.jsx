@@ -21,10 +21,13 @@ const CartModalContent = ({
   closeCartModal,
 }) => {
   const [itemToRemove, setItemToRemove] = useState(null);
+  const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
+
   const dispatch = useDispatch();
   const modalRef = useRef(null);
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
+  const [checkedItems, setCheckedItems] = useState({});
 
   const handleRemoveWithSlide = (itemId) => {
     setItemToRemove(itemId);
@@ -32,6 +35,18 @@ const CartModalContent = ({
       dispatch(removeItem({ id: itemId }));
       setItemToRemove(null);
     }, 400);
+  };
+  const handleCheckboxChange = (itemId) => {
+    setCheckedItems((prevCheckedItems) => {
+      const updatedCheckedItems = {
+        ...prevCheckedItems,
+        [itemId]: !prevCheckedItems[itemId],
+      };
+      setIsAnyCheckboxChecked(
+        Object.values(updatedCheckedItems).some((value) => value)
+      );
+      return updatedCheckedItems;
+    });
   };
 
   useEffect(() => {
@@ -49,7 +64,9 @@ const CartModalContent = ({
   }, [closeCartModal]);
 
   const handleOrder = () => {
-    const totalOrderPrice = cartItems.reduce(
+    const checkedCartItems = cartItems.filter((item) => checkedItems[item.id]);
+
+    const totalOrderPrice = checkedCartItems.reduce(
       (total, item) => total + item.totalPrice,
       0
     );
@@ -75,8 +92,13 @@ const CartModalContent = ({
   };
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.totalPrice, 0);
+    const checkedItemsArray = cartItems.filter((item) => checkedItems[item.id]);
+    return checkedItemsArray.reduce(
+      (total, item) => total + item.totalPrice,
+      0
+    );
   };
+
   const truncateString = (str, maxLength) => {
     if (str.length > maxLength) {
       return str.substring(0, maxLength);
@@ -99,7 +121,6 @@ const CartModalContent = ({
         qty: item.quantity,
         price: formattedTotalCartPrice,
         username: username,
-        
       })),
       email: "example@example.com",
 
@@ -129,7 +150,6 @@ const CartModalContent = ({
       } else {
         console.log("Order sent successfully");
       }
-    
     } catch (error) {
       console.error("Error sending order:", error);
       navigate("/Error");
@@ -162,6 +182,12 @@ const CartModalContent = ({
             }`}
           >
             <div className="flex items-center space-x-4">
+              <input
+                type="checkbox"
+                checked={checkedItems[item.id] || false}
+                onChange={() => handleCheckboxChange(item.id)}
+                className="mr-2"
+              />
               <img
                 src={item.image}
                 alt={item.name}
@@ -216,15 +242,21 @@ const CartModalContent = ({
           </div>
           <div className="flex gap-2 justify-center mt-4">
             <button
-              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+              className={`bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 ${
+                !isAnyCheckboxChecked ? " opacity-50" : ""
+              }`}
               onClick={handleOrder}
+              disabled={!isAnyCheckboxChecked}
             >
               Chat Admin
             </button>
 
             <button
-              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+              className={`bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 ${
+                !isAnyCheckboxChecked ? " opacity-50" : ""
+              }`}
               onClick={handlePay}
+              disabled={!isAnyCheckboxChecked}
             >
               Pay
             </button>

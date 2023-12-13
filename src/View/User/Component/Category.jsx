@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import {
@@ -15,10 +15,10 @@ const Category = () => {
   const products = useSelector(selectProducts);
   const selectedCategory = useSelector(selectCategory);
 
-  const uniqueCategories = [
-    ...new Set(products.map((product) => product.category)),
-  ];
-
+  const uniqueCategories = useMemo(
+    () => [...new Set(products.map((product) => product.category))],
+    [products]
+  );
   const [bgColors, setBgColors] = useState([]);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Category = () => {
         settings: {
           slidesToShow: 2,
           arrows: false,
-          autoplay: window.innerWidth >= 1000, // Adjust autoplay based on the window width
+          autoplay: window.innerWidth >= 1000,
         },
       },
       {
@@ -56,7 +56,7 @@ const Category = () => {
         settings: {
           slidesToShow: 1,
           arrows: false,
-          autoplay: window.innerWidth >= 1000, // Adjust autoplay based on the window width
+          autoplay: window.innerWidth >= 1000,
         },
       },
     ],
