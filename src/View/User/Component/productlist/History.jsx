@@ -14,7 +14,8 @@ import {
   setSortType,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
-import Chart from "./chart";
+import SpendingOverTimeChart from "./Graphic";
+
 
 
 const History = () => {
@@ -227,7 +228,7 @@ const History = () => {
           )}
         </div>
       )}
-      <Chart />
+      <SpendingOverTimeChart />
     </div>
   );
 };
