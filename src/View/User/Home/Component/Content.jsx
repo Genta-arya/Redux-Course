@@ -14,6 +14,10 @@ const Content = () => {
     }
   };
 
+  const redirectToShop = () => {
+    window.location.href = "/shop";
+  };
+
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -140,6 +144,7 @@ const Content = () => {
           <motion.button
             className="bg-blue-500 font-serif hover:bg-blue-800 border-b-8 border-slate-500 hover:border-black text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
             variants={scaleIn}
+            onClick={redirectToShop}
           >
             Get Started
           </motion.button>
@@ -239,11 +244,11 @@ const Content = () => {
           let's explore the world through valuable updates and information that
           enhance your shopping experience.
         </motion.p>
-
         <Link to="/shop">
           <motion.button
             className="bg-blue-500 font-serif hover:bg-blue-800 border-b-8 border-slate-500 hover:border-black text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
             variants={scaleIn}
+            onClick={redirectToShop}
           >
             Get Started
           </motion.button>
