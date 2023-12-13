@@ -49,10 +49,12 @@ const App = () => {
     };
   }, []);
 
+  // Check if the screen width is less than or equal to 768 pixels (adjust as needed)
+  const isMobile = window.innerWidth <= 768;
 
   return (
     <BrowserRouter>
-      {isLoading ? (
+      {isLoading && !isMobile ? (
         <LoadingSpinner />
       ) : (
         <Routes>
