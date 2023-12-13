@@ -20,7 +20,7 @@ const SortFitur = () => {
       <div className="relative mx-auto w-[90%]">
         <div
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="cursor-pointer px-2 py-1 border rounded    flex items-center"
+          className="cursor-pointer px-2 py-1 border rounded    flex items-center justify-between"
         >
           <div className="text-white">sort</div>
           <FontAwesomeIcon icon={faSort} className="ml-2 text-white" />
