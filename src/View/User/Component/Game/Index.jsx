@@ -17,14 +17,14 @@ const GameList = () => {
       title: "Simulasi Slot Machine Game",
 
       imageURL: game1,
-      url: "https://redux-course-genta.vercel.app/slot",
+      url: "https://www.hkks.shop/slot",
     },
     {
       id: 1,
       title: "Quiz Game",
 
       imageURL: game2,
-      url: "https://redux-course-genta.vercel.app/quiz",
+      url: "https://www.hkks.shop/quiz",
     },
   ];
 
