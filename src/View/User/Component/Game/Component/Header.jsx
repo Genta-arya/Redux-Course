@@ -10,7 +10,7 @@ const HeaderGame = () => {
         <Link to="/shop" className="text-white">
           <FontAwesomeIcon icon={faArrowLeft} className="mr-2 fa-lg" />
         </Link>
-        <h1 className="text-2xl font-semibold ml-4">IKKEA GAME</h1>
+        <h1 className="text-2xl font-semibold ml-4">HKKS GAME</h1>
       </div>
     </div>
   );

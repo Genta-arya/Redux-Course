@@ -32,7 +32,7 @@ const GameList = () => {
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   useEffect(() => {
-    document.title = `IKKEA | Game`;
+    document.title = `HKKS | Game`;
   });
 
   return (
