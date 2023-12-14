@@ -34,7 +34,7 @@ const SpendingOverTimeChart = () => {
           }
 
           const data = await response.json();
-          console.log("Data response:", data);
+    
 
           const uniqueDatesArray = [
             ...new Set(

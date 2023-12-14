@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAuthenticated } from '../View/User/Component/productlist/fitur/AuthSlice';
+import { API_ENDPOINTS } from './API';
 
 
 const useAuthCheck = () => {
@@ -14,7 +15,7 @@ const useAuthCheck = () => {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch('https://api-ikkea.vercel.app/jwt', {
+        const response = await fetch(API_ENDPOINTS.CekJWT, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

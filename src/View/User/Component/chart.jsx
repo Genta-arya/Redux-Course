@@ -7,12 +7,19 @@ import {
   faTimes,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../../../style/CartModalContent.module.css";
 import { removeItem } from "./productlist/fitur/slice";
 import { useNavigate } from "react-router-dom";
 import { API_ENDPOINTS } from "../../../service/API";
 import { motion, AnimatePresence } from "framer-motion";
+import VoucherForm from "./productlist/fitur/VoucherForm";
+import {
+  applyVoucher,
+  resetVoucher,
+  setDiscountPercentage,
+} from "./productlist/fitur/voucherSlice";
+
 const CartModalContent = ({
   cartItems,
 
@@ -23,12 +30,15 @@ const CartModalContent = ({
 }) => {
   const [itemToRemove, setItemToRemove] = useState(null);
   const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
-
   const dispatch = useDispatch();
   const modalRef = useRef(null);
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
   const [checkedItems, setCheckedItems] = useState({});
+  const [enteredVoucher, setEnteredVoucher] = useState("");
+  const [voucherError, setVoucherError] = useState(null);
+  const [appliedDiscountPercentage, setAppliedDiscountPercentage] =
+    useState(null);
 
   const handleRemoveWithSlide = (itemId) => {
     setItemToRemove(itemId);
@@ -93,27 +103,43 @@ const CartModalContent = ({
     window.open(whatsappUrl, "_blank");
   };
 
-  const calculateTotalPrice = () => {
-    const checkedItemsArray = cartItems.filter((item) => checkedItems[item.id]);
-    return checkedItemsArray.reduce(
-      (total, item) => total + item.totalPrice,
-      0
-    );
-  };
-
   const truncateString = (str, maxLength) => {
     if (str.length > maxLength) {
       return str.substring(0, maxLength);
     }
     return str;
   };
-  const totalCartPrice = calculateTotalPrice();
+
+  const calculateTotalPriceBeforeDiscount = () => {
+    const checkedItemsArray = cartItems.filter((item) => checkedItems[item.id]);
+
+    return checkedItemsArray.reduce(
+      (total, item) => total + item.totalPrice,
+      0
+    );
+  };
+
+  const calculateTotalPriceAfterDiscount = () => {
+    return appliedDiscountPercentage !== null
+      ? calculateTotalPriceBeforeDiscount() * (1 - appliedDiscountPercentage)
+      : calculateTotalPriceBeforeDiscount();
+  };
+
+  const totalCartPrice = calculateTotalPriceBeforeDiscount();
+
   const formattedTotalCartPrice = totalCartPrice.toFixed(2);
-  const MAX_ITEM_NAME_LENGTH = 50;
 
   const handlePay = async () => {
     const currentDate = new Date();
     const formattedCurrentDate = currentDate.toISOString();
+    const MAX_ITEM_NAME_LENGTH = 50;
+
+    // Calculate total price before and after discount
+    const totalPriceBeforeDiscount = calculateTotalPriceBeforeDiscount();
+    const totalPriceAfterDiscount =
+      appliedDiscountPercentage !== null
+        ? totalPriceBeforeDiscount * (1 - appliedDiscountPercentage / 100)
+        : totalPriceBeforeDiscount;
 
     const orderDetails = {
       items: cartItems.map((item) => ({
@@ -121,11 +147,13 @@ const CartModalContent = ({
         nm_product: truncateString(item.title, MAX_ITEM_NAME_LENGTH),
         image: item.image,
         qty: item.quantity,
-        price: formattedTotalCartPrice,
+        price:
+          appliedDiscountPercentage !== null
+            ? totalPriceAfterDiscount.toFixed(2)
+            : item.totalPrice.toFixed(2),
         username: username,
       })),
       email: "example@example.com",
-
       time: formattedCurrentDate,
     };
 
@@ -150,7 +178,24 @@ const CartModalContent = ({
       if (redirectUrl) {
         window.open(redirectUrl, "_blank");
       } else {
-        console.log("Order sent successfully");
+       
+      }
+
+      if (appliedDiscountPercentage !== null) {
+        const updateVoucherResponse = await fetch(
+          `${API_ENDPOINTS.update_voucher}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ voucherCode: enteredVoucher, isUsed: true }),
+          }
+        );
+
+        if (!updateVoucherResponse.ok) {
+          throw new Error("Failed to update voucher status");
+        }
       }
     } catch (error) {
       console.error("Error sending order:", error);
@@ -159,6 +204,39 @@ const CartModalContent = ({
 
     handleClearCart();
     closeCartModal();
+  };
+
+  const handleApplyVoucher = async () => {
+    try {
+      const response = await fetch(`${API_ENDPOINTS.CekVoucher}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ voucherCode: enteredVoucher }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to apply voucher");
+      }
+
+      const voucherData = await response.json();
+      const discountPercentage = voucherData.discountPercentage;
+     
+      setAppliedDiscountPercentage(discountPercentage);
+      setVoucherError(null);
+    } catch (error) {
+      console.error("Voucher validation error:", error.message);
+
+      if (error.message) {
+        setVoucherError(error.message);
+      } else {
+        setVoucherError("Failed to apply voucher");
+      }
+
+      setAppliedDiscountPercentage(null);
+    }
   };
 
   return (
@@ -243,38 +321,70 @@ const CartModalContent = ({
         )}
 
         {cartItems.length > 0 && (
-          <div className="grid grid-cols-1  lg:flex md:flex items-center justify-between mt-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-red-500 font-semibold hover:text-red-700 focus:outline-none"
-              onClick={handleClearCart}
-            >
-              <FontAwesomeIcon icon={faTrash} /> Remove All
-            </motion.button>
-            <div className="text-base font-bold">
-              Total : ${formattedTotalCartPrice}
-            </div>
-            <div className="flex gap-2 justify-center mt-4">
-              <button
-                className={`bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 ${
-                  !isAnyCheckboxChecked ? " opacity-50" : ""
-                }`}
-                onClick={handleOrder}
-                disabled={!isAnyCheckboxChecked}
+          <div>
+            <div className="grid grid-cols-1  lg:flex md:flex items-center justify-between mt-4">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="text-red-500 font-semibold hover:text-red-700 focus:outline-none"
+                onClick={handleClearCart}
               >
-                Chat Admin
-              </button>
+                <FontAwesomeIcon icon={faTrash} /> Remove All
+              </motion.button>
 
-              <button
-                className={`bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 ${
-                  !isAnyCheckboxChecked ? " opacity-50" : ""
-                }`}
-                onClick={handlePay}
-                disabled={!isAnyCheckboxChecked}
-              >
-                Pay
-              </button>
+              <div className="flex gap-2 justify-center mt-4">
+                <button
+                  className={`bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 ${
+                    !isAnyCheckboxChecked ? " opacity-50" : ""
+                  }`}
+                  onClick={handleOrder}
+                  disabled={!isAnyCheckboxChecked}
+                >
+                  Chat Admin
+                </button>
+                <button
+                  className={`bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 ${
+                    !isAnyCheckboxChecked ? " opacity-50" : ""
+                  }`}
+                  onClick={handlePay}
+                  disabled={!isAnyCheckboxChecked}
+                >
+                  Pay
+                </button>
+              </div>
+            </div>
+
+            {appliedDiscountPercentage === null ? (
+              <div className="text-base font-bold">
+                Total: ${calculateTotalPriceBeforeDiscount().toFixed(2)}
+              </div>
+            ) : (
+              <div>
+                <div className="text-base font-bold line-through text-gray-500">
+                  Original Price: $
+                  {calculateTotalPriceBeforeDiscount().toFixed(2)}
+                </div>
+                <div className="text-base font-bold text-red-500">
+                  Discounted Price: $
+                  {calculateTotalPriceAfterDiscount().toFixed(2)}
+                </div>
+              </div>
+            )}
+
+            {appliedDiscountPercentage !== null && (
+              <div className="text-base font-bold">
+                Discount Applied: {appliedDiscountPercentage}%
+              </div>
+            )}
+
+            <div className="flex  justify-center items-center mt-4">
+              <VoucherForm
+                enteredVoucher={enteredVoucher}
+                setEnteredVoucher={setEnteredVoucher}
+                handleApplyVoucher={handleApplyVoucher}
+                voucherError={voucherError}
+                isCheckboxChecked={isAnyCheckboxChecked}
+              />
             </div>
           </div>
         )}

@@ -18,19 +18,25 @@ import CartModalContent from "./chart";
 import SearchInput from "./Search";
 import { useNavigate } from "react-router-dom";
 import BottomNav from "./BottomNav";
-import { selectIsAuthenticated, setAuthenticated } from "./productlist/fitur/AuthSlice";
+import {
+  selectIsAuthenticated,
+  setAuthenticated,
+} from "./productlist/fitur/AuthSlice";
 import { verifJWT } from "../../../service/API";
-import "../../../style/custome.css"
+import "../../../style/custome.css";
+import VoucherModal from "./productlist/VocuherModal";
 const Navbar = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(true);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isVoucherModalOpen, setVoucherModalOpen] = useState(false);
   const dropdownRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const cartItemCount = cartItems.length;
+  const unusedVouchers = useSelector((state) => state.vouchers.data);  
 
   const openCartModal = () => {
     setCartModalOpen(true);
@@ -75,27 +81,19 @@ const Navbar = () => {
         const data = await verifJWT();
 
         if (data.isLogin) {
-          console.log("User is logged in");
+         
           dispatch(setAuthenticated(true));
-          setDropdownOpen(false)
+          setDropdownOpen(false);
         } else {
-          console.log("User is not logged in");
+         
           dispatch(setAuthenticated(false));
         }
-      } catch (error) {
-      
-      }
+      } catch (error) {}
     };
 
     fetchData();
   }, [dispatch, navigate]);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setDropdownOpen(false);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -125,17 +123,30 @@ const Navbar = () => {
   };
 
   const handleClick = () => {
-    navigate("/")
+    navigate("/");
   };
 
+  const handleVoucherClick = () => {
+  
+    setDropdownOpen(false);
+
+
+    setVoucherModalOpen(true);
+  };
+
+  const handleCloseVoucherModal = () => {
+    setVoucherModalOpen(false);
+  };
   return (
     <div className="bg-gray-800 p-4 w-screen ">
-
-     
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
         <div>
-
-        <div className="text-white text-lg font-bold lg:block shines cursor-pointer"onClick={handleClick}>HKKS STORE</div>
+          <div
+            className="text-white text-lg font-bold lg:block shines cursor-pointer"
+            onClick={handleClick}
+          >
+            HKKS STORE
+          </div>
         </div>
 
         <div className="hidden lg:flex md:hidden items-center">
@@ -155,7 +166,7 @@ const Navbar = () => {
                   className="mr-12 text-2xl cursor-pointer"
                   onClick={openHistory}
                 />
-               
+
                 <FontAwesomeIcon
                   icon={faShoppingCart}
                   className="mr-2 text-2xl cursor-pointer"
@@ -188,31 +199,38 @@ const Navbar = () => {
               </div>
             </div>
           )}
-
           {isAuthenticated ? (
-            <div
-              className="avatar online md:block lg:block "
-              onClick={handleClickAvatar}
-            >
-              <div className="w-10 rounded-full overflow-hidden  ">
-                <img
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  alt="Avatar"
-                  className="lg:w-full lg:h-full md:w-full md:h-full   object-cover cursor-pointer "
-                />
-              </div>
-              {isDropdownOpen && (
-                <div className="absolute lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-auto">
-                  <ul className="bg-white  p-2 rounded-md shadow-md">
-                    <li
-                      className="text-center justify-center items-center flex cursor-pointer"
-                      onClick={handleLogout}
-                    >
-                      <a>Logout</a>
-                    </li>
-                  </ul>
+            <div className="flex items-center">
+              <div
+                className="avatar online md:block lg:block"
+                onClick={handleClickAvatar}
+              >
+                <div className="w-10 rounded-full overflow-hidden">
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    alt="Avatar"
+                    className="lg:w-full lg:h-full md:w-full md:h-full object-cover cursor-pointer"
+                  />
                 </div>
-              )}
+                {isDropdownOpen && (
+                  <div className="absolute bg-white rounded-2xl z-50 lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-28 w-40">
+                    <ul>
+                      <li
+                        className="mb-2 text-center hover:bg-gray-100 cursor-pointer border-gray-400 border-b-2 p-2"
+                        onClick={handleVoucherClick}
+                      >
+                        <a className="block py-2">Voucher</a>
+                      </li>
+                      <li
+                        className="text-center hover:bg-gray-100 cursor-pointer"
+                        onClick={handleLogout}
+                      >
+                        <a className="block py-2">Logout</a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <h1
@@ -253,6 +271,8 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      {isVoucherModalOpen && <VoucherModal onClose={handleCloseVoucherModal} />}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import Content from "./Content";
 import FooterDaisy from "../../Component/FooterDaisy";
 import Footer from "../../Component/Footer";
 import CustomerReviews from "./CustomerReview";
-import ReviewForm from "./FormReview";
+
 
 const IndexLp = () => {
   return (

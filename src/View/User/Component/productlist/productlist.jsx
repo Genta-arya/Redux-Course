@@ -68,7 +68,7 @@ const ProductList = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("cek error:", isError);
+   
   }, [dispatch]);
 
   useEffect(() => {
@@ -77,10 +77,10 @@ const ProductList = () => {
         const data = await verifJWT();
 
         if (data.isLogin) {
-          console.log("User is logged in");
+        
           dispatch(setAuthenticated(true));
         } else {
-          console.log("User is not logged in");
+     
           dispatch(setAuthenticated(false));
         }
       } catch (error) {}

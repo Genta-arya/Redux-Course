@@ -16,6 +16,9 @@ const API_ENDPOINTS = {
   CheckUser: `${API_BASE_URL}get-username`,
   Gethistory: `${API_BASE_URL}get-history`,
   CekJWT: `${API_BASE_URL}jwt`,
+  update_voucher:`${API_BASE_URL}update-voucher`,
+  Voucher:`${API_BASE_URL}voucher`,
+  CekVoucher:`${API_BASE_URL}check-vouchers`,
 };
 
 const register = async (username, email, password) => {
@@ -46,8 +49,9 @@ const login = async (email, password) => {
 
     if (response.status === 200) {
       const token = response.data.token;
+      const uid = response.data.uid;
 
-      return { status: 200, data: { token } };
+      return { status: 200, data: { token, uid } };
     }
   } catch (error) {
     return { status: 401 };
@@ -57,7 +61,6 @@ const login = async (email, password) => {
 const verifJWT = async () => {
   try {
     const token = localStorage.getItem("token");
-    console.log("ini token:" ,token)
 
     const response = await fetch(API_ENDPOINTS.CekJWT, {
       method: "POST",
@@ -71,10 +74,8 @@ const verifJWT = async () => {
       const data = await response.json();
       return data;
     } else {
-     
     }
   } catch (error) {
-   
     throw error;
   }
 };

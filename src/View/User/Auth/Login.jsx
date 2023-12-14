@@ -27,6 +27,7 @@ const LoginForm = () => {
   const [isEnterOTPOpen, setIsEnterOTPOpen] = useState(false);
   const [otp, setOTP] = useState("");
   const [tokenJWT, setJWT] = useState("");
+  const [UID, setUID] = useState("");
 
   const [newPassword, setNewPassword] = useState("");
   const [isNewPasswordModalOpen, setIsNewPasswordModalOpen] = useState(false);
@@ -35,7 +36,9 @@ const LoginForm = () => {
 
   useEffect(() => {
     localStorage.setItem("token", tokenJWT);
+    localStorage.setItem("uid",UID)
   }, [tokenJWT]);
+  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -57,13 +60,14 @@ const LoginForm = () => {
       const response = await login(email, password);
 
       if (response.status === 200) {
-        console.log(response.data.token);
+        console.log(response.data.uid);
 
         setLoginError("");
         setLoginErrorServer("");
         setJWT(response.data.token);
+        setUID(response.data.uid)
 
-        console.log(tokenJWT);
+        
 
         const usernameResponse = await fetch(`${API_ENDPOINTS.CheckUser}`, {
           method: "POST",
