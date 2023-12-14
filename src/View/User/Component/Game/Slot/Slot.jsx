@@ -25,7 +25,7 @@ const SlotMachine = () => {
   const [winPercentage, setWinPercentage] = useState(5); 
 
   useEffect(() => {
-    document.title = `IKKEA SHOP | PlayGame`;
+    document.title = `HKKS SHOP | PlayGame`;
   });
 
 
