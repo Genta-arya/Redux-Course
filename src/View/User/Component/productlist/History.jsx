@@ -8,15 +8,12 @@ import {
   selectShoppingHistory,
   selectSortOrder,
   selectSortType,
-  selectTotalHistory,
   setShoppingHistory,
   setSortOrder,
   setSortType,
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
 import SpendingOverTimeChart from "./Graphic";
-
-
 
 const History = () => {
   const dispatch = useDispatch();
@@ -69,6 +66,16 @@ const History = () => {
       setLoading(false);
     }
   };
+  const handleCompletePayment = async (productId, paymentLink) => {
+    try {
+      window.open(paymentLink, "_blank");
+
+      fetchHistory();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     fetchHistory();
 
@@ -83,7 +90,10 @@ const History = () => {
 
   const convertToUSD = (price) => {
     const exchangeRate = 15000;
-    return (price / exchangeRate).toFixed(2);
+    const convertedPrice = (price / exchangeRate).toFixed(2);
+    return convertedPrice.endsWith(".00")
+      ? convertedPrice.slice(0, -3)
+      : convertedPrice;
   };
 
   const formatTime = (time) => {
@@ -219,7 +229,20 @@ const History = () => {
                         historyItem.status
                       )}`}
                     >
-                      {historyItem.status}
+                      {historyItem.status === "pending" ? (
+                        <button
+                          onClick={() =>
+                            handleCompletePayment(
+                              historyItem.product_id,
+                              historyItem.link
+                            )
+                          }
+                        >
+                          Click to Complete Payment
+                        </button>
+                      ) : (
+                        historyItem.status
+                      )}
                     </td>
                   </tr>
                 ))}

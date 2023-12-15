@@ -143,15 +143,17 @@ const CartModalContent = ({
         nm_product: truncateString(item.title, MAX_ITEM_NAME_LENGTH),
         image: item.image,
         qty: item.quantity,
-        price:
+        price: parseFloat(
           appliedDiscountPercentage !== null
             ? totalPriceAfterDiscount.toFixed(2)
-            : item.totalPrice.toFixed(2),
+            : item.totalPrice.toFixed(2)
+        ),
         username: username,
       })),
       email: "example@example.com",
       time: formattedCurrentDate,
     };
+    console.log(orderDetails)
 
     try {
       const response = await fetch(`${API_ENDPOINTS.ORDER}`, {
@@ -167,15 +169,9 @@ const CartModalContent = ({
       }
 
       const responseData = await response.json();
-
-      const redirectUrl = responseData.redirectUrl;
+     
       navigate("/history");
-
-      if (redirectUrl) {
-        window.open(redirectUrl, "_blank");
-      } else {
-       
-      }
+      window.open(responseData.redirect_url, "_blank");
 
       if (appliedDiscountPercentage !== null) {
         const updateVoucherResponse = await fetch(

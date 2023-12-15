@@ -3,7 +3,7 @@ import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 const API_ENDPOINTS = {
-  ORDER: `${API_BASE_URL}order`,
+  ORDER: `${API_BASE_URL}api/create-payment`,
 
   STATUS: `${API_BASE_URL}order-status`,
   Login: `${API_BASE_URL}login`,
