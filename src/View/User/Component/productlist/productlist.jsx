@@ -152,31 +152,33 @@ const ProductList = () => {
                   onClick={() => openImageModal(product.image)}
                   className=" cursor-pointer w-full h-40 md:w-full md:h-52  lg:w-full lg:h-52 object-scale-down p-4 mb-4 hover:scale-90 transition-all duration-500 ease-out"
                 />
-                <button
-                  className={`bg-transparent w-full px-4 py-2 mt-2 rounded transition-all duration-500 ease-out`}
-                  onClick={() => {
-                    if (favorites.some((item) => item.id === product.id)) {
-                      dispatch(removeFromFavorites(product));
-                    } else {
-                      dispatch(addToFavorites(product));
-                    }
-                  }}
-                >
-                  {favorites.some((item) => item.id === product.id) ? (
-                    <FontAwesomeIcon
-                      icon={solidHeart}
-                      className="text-red-500"
-                    />
-                  ) : (
-                    <FontAwesomeIcon
-                      icon={outlineHeart}
-                      className="text-gray-500"
-                    />
-                  )}
-                  <span className="ml-2">
-                    {favorites.some((item) => item.id === product.id)}
-                  </span>
-                </button>
+                {isAuthenticated && (
+                  <button
+                    className={`bg-transparent w-full px-4 py-2 mt-2 rounded transition-all duration-500 ease-out`}
+                    onClick={() => {
+                      if (favorites.some((item) => item.id === product.id)) {
+                        dispatch(removeFromFavorites(product));
+                      } else {
+                        dispatch(addToFavorites(product));
+                      }
+                    }}
+                  >
+                    {favorites.some((item) => item.id === product.id) ? (
+                      <FontAwesomeIcon
+                        icon={solidHeart}
+                        className="text-red-500"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={outlineHeart}
+                        className="text-gray-500"
+                      />
+                    )}
+                    <span className="ml-2">
+                      {favorites.some((item) => item.id === product.id)}
+                    </span>
+                  </button>
+                )}
 
                 <p className="text-lg font-bold mb-2 lg:hidden md:hidden block">
                   {truncateDescription(product.title, 30)}
