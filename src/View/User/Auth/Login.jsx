@@ -29,6 +29,7 @@ const LoginForm = () => {
   const [otp, setOTP] = useState("");
   const [tokenJWT, setJWT] = useState("");
   const [UID, setUID] = useState("");
+  
 
   const [newPassword, setNewPassword] = useState("");
   const [isNewPasswordModalOpen, setIsNewPasswordModalOpen] = useState(false);
@@ -38,6 +39,7 @@ const LoginForm = () => {
   useEffect(() => {
     localStorage.setItem("token", tokenJWT);
     localStorage.setItem("uid", UID);
+    localStorage.setItem("email", email);
   }, [tokenJWT]);
 
   const handleEmailChange = (e) => {
@@ -62,6 +64,7 @@ const LoginForm = () => {
       if (response.status === 200) {
         setLoginError("");
         setLoginErrorServer("");
+        setEmail(email)
         setJWT(response.data.token);
         setUID(response.data.uid);
         

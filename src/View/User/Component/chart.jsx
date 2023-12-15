@@ -30,6 +30,7 @@ const CartModalContent = ({
   const modalRef = useRef(null);
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
   const [checkedItems, setCheckedItems] = useState({});
   const [enteredVoucher, setEnteredVoucher] = useState("");
   const [voucherError, setVoucherError] = useState(null);
@@ -150,7 +151,7 @@ const CartModalContent = ({
         ),
         username: username,
       })),
-      email: "example@example.com",
+      email: email,
       time: formattedCurrentDate,
     };
     console.log(orderDetails)
