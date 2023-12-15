@@ -7,9 +7,10 @@ const formatDate = (date) => {
 };
 
 const mergeItemsWithSameProductName = (history) => {
+  const settledHistory = history.filter((item) => item.status === "settled");
   const mergedHistory = [];
 
-  history.forEach((item) => {
+  settledHistory.forEach((item) => {
     const existingItemIndex = mergedHistory.findIndex(
       (mergedItem) =>
         mergedItem.nm_product === item.nm_product &&
