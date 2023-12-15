@@ -60,12 +60,11 @@ const LoginForm = () => {
       const response = await login(email, password);
 
       if (response.status === 200) {
-        console.log(response.data.uid);
-
         setLoginError("");
         setLoginErrorServer("");
         setJWT(response.data.token);
         setUID(response.data.uid);
+        
 
         const usernameResponse = await fetch(`${API_ENDPOINTS.CheckUser}`, {
           method: "POST",
@@ -80,14 +79,45 @@ const LoginForm = () => {
           localStorage.setItem("username", username);
           navigate("/shop");
         }
-      } else if (response.status === 401) {
-        setLoginErrorServer("Email atau password salah");
-      } else if (response.status === 500) {
-        setLoginErrorServer("Gagal Terhubung Keserver");
+      } else {
+        if (response.status === 401) {
+          toast.error("Incorrect username or password", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+         
+        }
+        else if (response.status === 500) {
+          toast.error("Error connection server", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+         
+        }
       }
     } catch (error) {
-      console.log("Error saat login:", error);
-      setLoginErrorServer("Gagal Terhubung Keserver");
+      // Handle other errors
+      console.error("Error during login:", error);
+      toast.error("Error connection server", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
     } finally {
       setIsLoading(false);
     }

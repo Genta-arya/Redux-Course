@@ -44,16 +44,59 @@ const Register = () => {
     event.preventDefault();
     setIsLoading(true);
 
-    const response = await register(username, email, password);
+    try {
+      const response = await register(username, email, password);
+      console.log(response);
 
-    if (response.status === 200) {
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
-      toast.success("Registrasi berhasil", {
+      if (response.status === 200) {
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+        toast.success("Registrasi berhasil", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else if (response.status === 400) {
+       
+        toast.error(
+          response.message ||
+            "Registrasi gagal, Email atau Username telah digunakan.",
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+      } else if (response.status === 500) {
+        toast.error(
+          response.message ||
+            "Error connection server",
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      toast.error("Registrasi gagal. Mohon coba lagi.", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -62,19 +105,9 @@ const Register = () => {
         draggable: true,
         progress: undefined,
       });
-    } else {
-      toast.error("Registrasi gagal Email atau Username telah digunakan.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   const handleLogin = () => {

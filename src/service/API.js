@@ -16,32 +16,29 @@ const API_ENDPOINTS = {
   CheckUser: `${API_BASE_URL}get-username`,
   Gethistory: `${API_BASE_URL}get-history`,
   CekJWT: `${API_BASE_URL}jwt`,
-  update_voucher:`${API_BASE_URL}update-voucher`,
-  Voucher:`${API_BASE_URL}voucher`,
-  CekVoucher:`${API_BASE_URL}check-vouchers`,
+  update_voucher: `${API_BASE_URL}update-voucher`,
+  Voucher: `${API_BASE_URL}voucher`,
+  CekVoucher: `${API_BASE_URL}check-vouchers`,
 };
 
 const register = async (username, email, password) => {
   try {
-    const response = await axios.post(API_ENDPOINTS.Register, {
-      username,
-      email,
-      password,
-    });
+    const response = await axios.post(API_ENDPOINTS.Register, { username, email, password });
 
     if (response.status === 200) {
       return { status: 200 };
     }
   } catch (error) {
-    if (error.response) {
-      return { status: error.response.status, data: error.response.data };
-    } else if (error.request) {
-      return { status: 500 };
+    if (error.response && error.response.status === 400) {
+      // Bad Request (e.g., duplicate email or username)
+      return { status: 400, message: error.response.data.message || "Username or Email already exists" };
     } else {
-      return { status: 500 };
+      // Other errors (including 500)
+      return { status: 500, message: "Internal Server Error" };
     }
   }
 };
+
 
 const login = async (email, password) => {
   try {
@@ -54,7 +51,16 @@ const login = async (email, password) => {
       return { status: 200, data: { token, uid } };
     }
   } catch (error) {
-    return { status: 401 };
+    if (error.response && error.response.status === 401) {
+
+      return { status: 401 };
+    } else {
+      
+      return {
+        status: 500,
+        message: error.response.data.message || "Internal Server Error",
+      };
+    }
   }
 };
 
