@@ -36,7 +36,7 @@ const Navbar = () => {
   const cartItems = useSelector(selectCartItems);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const cartItemCount = cartItems.length;
-  const unusedVouchers = useSelector((state) => state.vouchers.data);  
+  const unusedVouchers = useSelector((state) => state.vouchers.data);
 
   const openCartModal = () => {
     setCartModalOpen(true);
@@ -81,11 +81,9 @@ const Navbar = () => {
         const data = await verifJWT();
 
         if (data.isLogin) {
-         
           dispatch(setAuthenticated(true));
           setDropdownOpen(false);
         } else {
-         
           dispatch(setAuthenticated(false));
         }
       } catch (error) {}
@@ -93,7 +91,6 @@ const Navbar = () => {
 
     fetchData();
   }, [dispatch, navigate]);
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -127,9 +124,7 @@ const Navbar = () => {
   };
 
   const handleVoucherClick = () => {
-  
     setDropdownOpen(false);
-
 
     setVoucherModalOpen(true);
   };
@@ -213,19 +208,20 @@ const Navbar = () => {
                   />
                 </div>
                 {isDropdownOpen && (
-                  <div className="absolute bg-white rounded-2xl z-50 lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-28 w-40">
+                  <div className="absolute bg-white rounded-2xl z-50 lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-28 w-40 border-gray-500 border-4 p-2">
                     <ul>
                       <li
-                        className="mb-2 text-center hover:bg-gray-100 cursor-pointer border-gray-400 border-b-2 p-2"
+                        className="mb-2 text-center hover:bg-gray-100 cursor-pointer border-gray-400  "
                         onClick={handleVoucherClick}
                       >
                         <a className="block py-2">Voucher</a>
                       </li>
+                      <li className="mb-1 text-center  border-gray-400 border-b-2"></li>
                       <li
-                        className="text-center hover:bg-gray-100 cursor-pointer"
+                        className="text-center hover:bg-gray-100 cursor-pointer border-gray-400 "
                         onClick={handleLogout}
                       >
-                        <a className="block py-2">Logout</a>
+                        <a className="block py-">Logout</a>
                       </li>
                     </ul>
                   </div>
