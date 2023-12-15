@@ -30,10 +30,10 @@ const register = async (username, email, password) => {
     }
   } catch (error) {
     if (error.response && error.response.status === 400) {
-      // Bad Request (e.g., duplicate email or username)
+    
       return { status: 400, message: error.response.data.message || "Username or Email already exists" };
     } else {
-      // Other errors (including 500)
+    
       return { status: 500, message: "Internal Server Error" };
     }
   }
