@@ -25,6 +25,7 @@ import {
 import { verifJWT } from "../../../service/API";
 import "../../../style/custome.css";
 import VoucherModal from "./productlist/VocuherModal";
+import FavoriteModal from "./productlist/FavoriteModal";
 const Navbar = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(true);
@@ -36,10 +37,13 @@ const Navbar = () => {
   const cartItems = useSelector(selectCartItems);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const cartItemCount = cartItems.length;
-  const unusedVouchers = useSelector((state) => state.vouchers.data);
+  const [isFavoriteModalOpen, setFavoriteModalOpen] = useState(false);
 
   const openCartModal = () => {
     setCartModalOpen(true);
+  };
+  const handleClickOpenFavoriteModal = () => {
+    setFavoriteModalOpen(true);
   };
 
   const openGame = () => {
@@ -132,6 +136,10 @@ const Navbar = () => {
   const handleCloseVoucherModal = () => {
     setVoucherModalOpen(false);
   };
+
+  const handleCloseFavorite = () => {
+    setFavoriteModalOpen(false);
+  };
   return (
     <div className="bg-gray-800 p-4 w-screen ">
       <div className="flex justify-between items-center px-2 lg:px-32 md:px-12">
@@ -208,20 +216,26 @@ const Navbar = () => {
                   />
                 </div>
                 {isDropdownOpen && (
-                  <div className="absolute bg-white rounded-2xl z-50 lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-28 w-40 border-gray-500 border-4 p-2">
+                  <div className="absolute bg-white rounded-2xl z-50 lg:top-12 lg:right-4 md:top-12 md:right-4 top-5 right-12 h-40 w-40 border-gray-500 border-4 p-2 overflow-x-auto">
                     <ul>
                       <li
-                        className="mb-2 text-center hover:bg-gray-100 cursor-pointer border-gray-400  "
+                        className="mb-2 text-center hover:bg-gray-100 cursor-pointer border-gray-400"
                         onClick={handleVoucherClick}
                       >
                         <a className="block py-2">Voucher</a>
                       </li>
-                      <li className="mb-1 text-center  border-gray-400 border-b-2"></li>
                       <li
-                        className="text-center hover:bg-gray-100 cursor-pointer border-gray-400 "
+                        className="mb-2 text-center hover:bg-gray-100 cursor-pointer border-gray-400"
+                        onClick={handleClickOpenFavoriteModal}
+                      >
+                        <a className="block py-2">Favorite</a>
+                      </li>
+                      <li className="mb-1 text-center border-gray-400 border-b-2"></li>
+                      <li
+                        className="text-center hover:bg-gray-100 cursor-pointer border-gray-400"
                         onClick={handleLogout}
                       >
-                        <a className="block py-">Logout</a>
+                        <a className="block py-2">Logout</a>
                       </li>
                     </ul>
                   </div>
@@ -269,6 +283,7 @@ const Navbar = () => {
       )}
 
       {isVoucherModalOpen && <VoucherModal onClose={handleCloseVoucherModal} />}
+      {isFavoriteModalOpen && <FavoriteModal onClose={handleCloseFavorite} />}
     </div>
   );
 };

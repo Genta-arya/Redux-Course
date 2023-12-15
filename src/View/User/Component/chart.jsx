@@ -14,11 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { API_ENDPOINTS } from "../../../service/API";
 import { motion, AnimatePresence } from "framer-motion";
 import VoucherForm from "./productlist/fitur/VoucherForm";
-import {
-  applyVoucher,
-  resetVoucher,
-  setDiscountPercentage,
-} from "./productlist/fitur/voucherSlice";
+
 
 const CartModalContent = ({
   cartItems,

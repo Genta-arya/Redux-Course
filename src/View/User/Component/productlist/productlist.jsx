@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
 
 import {
   addItem,
@@ -32,6 +34,11 @@ import { selectIsAuthenticated, setAuthenticated } from "./fitur/AuthSlice";
 import { verifJWT } from "../../../../service/API";
 import { motion } from "framer-motion";
 import ImageModal from "./fitur/ImageModal";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  selectFavorites,
+} from "./fitur/FavSlice";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -45,7 +52,7 @@ const ProductList = () => {
   const products = useSelector(selectProducts);
   const selectedCategory = useSelector(selectCategory);
   const cartItems = useSelector(selectCartItems);
-
+  const favorites = useSelector(selectFavorites);
   const charter = useSelector(selectCharter);
   const searchTerm = useSelector(selectSearchTerm);
   const [isImageModalOpen, setImageModalOpen] = useState(false);
@@ -68,7 +75,6 @@ const ProductList = () => {
 
   useEffect(() => {
     fetchData();
-   
   }, [dispatch]);
 
   useEffect(() => {
@@ -77,10 +83,8 @@ const ProductList = () => {
         const data = await verifJWT();
 
         if (data.isLogin) {
-        
           dispatch(setAuthenticated(true));
         } else {
-     
           dispatch(setAuthenticated(false));
         }
       } catch (error) {}
@@ -148,6 +152,32 @@ const ProductList = () => {
                   onClick={() => openImageModal(product.image)}
                   className=" cursor-pointer w-full h-40 md:w-full md:h-52  lg:w-full lg:h-52 object-scale-down p-4 mb-4 hover:scale-90 transition-all duration-500 ease-out"
                 />
+                <button
+                  className={`bg-transparent w-full px-4 py-2 mt-2 rounded transition-all duration-500 ease-out`}
+                  onClick={() => {
+                    if (favorites.some((item) => item.id === product.id)) {
+                      dispatch(removeFromFavorites(product));
+                    } else {
+                      dispatch(addToFavorites(product));
+                    }
+                  }}
+                >
+                  {favorites.some((item) => item.id === product.id) ? (
+                    <FontAwesomeIcon
+                      icon={solidHeart}
+                      className="text-red-500"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={outlineHeart}
+                      className="text-gray-500"
+                    />
+                  )}
+                  <span className="ml-2">
+                    {favorites.some((item) => item.id === product.id)}
+                  </span>
+                </button>
+
                 <p className="text-lg font-bold mb-2 lg:hidden md:hidden block">
                   {truncateDescription(product.title, 30)}
                 </p>
@@ -162,6 +192,7 @@ const ProductList = () => {
                   {truncateDescription(product.description, 50)}
                 </p>
               </div>
+
               <button
                 className={`bg-black text-white w-full px-4 py-2  mt-4 rounded  hover:scale-105 transition-all duration-500 ease-out ${
                   isAuthenticated ? "hover:bg-gray-800" : "bg-gray-300 "
