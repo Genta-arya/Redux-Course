@@ -39,6 +39,7 @@ import {
   removeFromFavorites,
   selectFavorites,
 } from "./fitur/FavSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -114,6 +115,38 @@ const ProductList = () => {
     )
     .sort((a, b) => sortByCharacter([a, b], charter));
 
+  const handleAddToFavorites = (product) => {
+    if (favorites.some((item) => item.id === product.id)) {
+      dispatch(removeFromFavorites(product));
+    } else {
+      dispatch(addToFavorites(product));
+    }
+
+    const maxTitleLength = 50;
+    const truncatedTitle =
+      product.title.length > maxTitleLength
+        ? `${product.title.slice(0, maxTitleLength)}......`
+        : product.title;
+    const remainingTitle =
+      product.title.length > maxTitleLength
+        ? `(${product.title.length - maxTitleLength}`
+        : "";
+    const notificationMessage = `${truncatedTitle} ${
+      favorites.some((item) => item.id === product.id)
+        ? "removed from"
+        : "added to"
+    } favorites!`;
+
+    toast.success(notificationMessage, {
+      position: "top-center",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
   return (
     <div className="w-screen">
       {!loading && (
@@ -125,7 +158,7 @@ const ProductList = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:p-3 w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 md:p-3 w-full">
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
         ) : filteredAndSortedProducts.length === 0 ? (
@@ -155,13 +188,7 @@ const ProductList = () => {
                 {isAuthenticated && (
                   <button
                     className={`bg-transparent w-full px-4 py-2 mt-2 rounded transition-all duration-500 ease-out`}
-                    onClick={() => {
-                      if (favorites.some((item) => item.id === product.id)) {
-                        dispatch(removeFromFavorites(product));
-                      } else {
-                        dispatch(addToFavorites(product));
-                      }
-                    }}
+                    onClick={() => handleAddToFavorites(product)}
                   >
                     {favorites.some((item) => item.id === product.id) ? (
                       <FontAwesomeIcon
@@ -235,6 +262,7 @@ const ProductList = () => {
           onClose={() => setImageModalOpen(false)}
         />
       )}
+      <ToastContainer />
     </div>
   );
 };
