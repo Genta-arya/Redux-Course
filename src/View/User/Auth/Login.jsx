@@ -13,6 +13,7 @@ import { API_ENDPOINTS, login } from "../../../service/API";
 import useAuthCheck from "../../../service/AuthHook";
 import { selectIsAuthenticated } from "../Component/productlist/fitur/AuthSlice";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -36,9 +37,8 @@ const LoginForm = () => {
 
   useEffect(() => {
     localStorage.setItem("token", tokenJWT);
-    localStorage.setItem("uid",UID)
+    localStorage.setItem("uid", UID);
   }, [tokenJWT]);
-  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -65,9 +65,7 @@ const LoginForm = () => {
         setLoginError("");
         setLoginErrorServer("");
         setJWT(response.data.token);
-        setUID(response.data.uid)
-
-        
+        setUID(response.data.uid);
 
         const usernameResponse = await fetch(`${API_ENDPOINTS.CheckUser}`, {
           method: "POST",
@@ -133,19 +131,54 @@ const LoginForm = () => {
           });
 
           if (response.ok) {
-            alert("OTP sent successfully");
+            toast.success("OTP sent successfully", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
           } else {
-            alert("Failed to send OTP");
+            toast.error("Failed to send OTP", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
           }
         } else {
-          alert("Email is not registered");
+          toast.warn("Email is not registered", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         }
       } else {
-        alert("Failed to check email");
+        toast.error("Failed to check email", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
       console.error("Failed to send OTP:", error);
-      alert("An error occurred while sending OTP.");
+      toast.error("An error occurred while sending OTP.", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -178,19 +211,47 @@ const LoginForm = () => {
         });
 
         if (deleteTokenResponse.ok) {
-          console.log("Token deleted successfully.");
           setOTP("");
+          toast.success("OTP is Valid.", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
           openEnterNewPasswordModal();
         } else {
           console.error("Failed to delete the token.");
-          alert("Failed to delete the token. Please try again.");
+          toast.error("Failed to delete the token. Please try again.", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         }
       } else {
-        alert("OTP is not valid. Please try again.");
+        toast.warn("OTP is not valid. Please try again check your OTP.", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
       console.error("Failed to verify OTP:", error);
-      alert("An error occurred while verifying OTP.");
+      toast.error("An error occurred while verifying OTP.", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -215,15 +276,36 @@ const LoginForm = () => {
       });
 
       if (response.ok) {
-        alert("Your new password has been set.");
+        toast.success("Your new password has been set.", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         setNewPassword("");
         closeEnterNewPasswordModal();
       } else {
-        alert("Failed to set a new password. Please try again.");
+        toast.error("Failed to set a new password. Please try again.", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
       console.error("Failed to set a new password:", error);
-      alert("An error occurred while setting a new password.");
+      toast.error("An error occurred while setting a new password.", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -468,6 +550,7 @@ const LoginForm = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

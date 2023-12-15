@@ -24,7 +24,6 @@ const Register = () => {
   const [loginErrorServer, setLoginErrorServer] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -55,7 +54,7 @@ const Register = () => {
         navigate("/login");
       }, 3000);
       toast.success("Registrasi berhasil", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -65,7 +64,7 @@ const Register = () => {
       });
     } else {
       toast.error("Registrasi gagal Email atau Username telah digunakan.", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -164,7 +163,12 @@ const Register = () => {
               "Register"
             )}
           </button>
-          <div className="flex justify-center hover:underline p-2 cursor-pointer " onClick={handleLogin}>Back to login</div>
+          <div
+            className="flex justify-center hover:underline p-2 cursor-pointer "
+            onClick={handleLogin}
+          >
+            Back to login
+          </div>
         </form>
       </div>
       <ToastContainer />
