@@ -176,7 +176,7 @@ const ProductList = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 md:p-3 gap-2 p-2">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 md:p-3 gap-2 p-2 lg:px-40 md:px-5">
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
         ) : filteredAndSortedProducts.length === 0 ? (
