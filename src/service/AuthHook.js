@@ -1,19 +1,20 @@
-// AuthHook.js
+// useAuthCheck.js
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setAuthenticated } from '../View/User/Component/productlist/fitur/AuthSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthenticated, setVoucherData, selectVoucherData } from '../View/User/Component/productlist/fitur/AuthSlice';
 import { API_ENDPOINTS } from './API';
-
 
 const useAuthCheck = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const voucherData = useSelector(selectVoucherData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
+        const uid = localStorage.getItem('uid');
 
         const response = await fetch(API_ENDPOINTS.CekJWT, {
           method: 'POST',
@@ -24,12 +25,26 @@ const useAuthCheck = () => {
         });
 
         if (!response.ok) {
-          console.log('auth not valid');
+
           dispatch(setAuthenticated(false));
-          navigate('/shop');
+          // navigate('/shop');
         } else {
           dispatch(setAuthenticated(true));
-         
+
+        
+          const voucherResponse = await fetch(API_ENDPOINTS.Voucher, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_uid: uid, is_used: 0 }),
+          });
+
+          if (voucherResponse.ok) {
+            const fetchedVoucherData = await voucherResponse.json();
+            console.log(fetchedVoucherData);
+            dispatch(setVoucherData(fetchedVoucherData));
+          }
         }
       } catch (error) {
         console.error('Error verifying token:', error);
@@ -38,6 +53,8 @@ const useAuthCheck = () => {
 
     fetchData();
   }, [dispatch, navigate]);
+
+  return voucherData;
 };
 
 export default useAuthCheck;

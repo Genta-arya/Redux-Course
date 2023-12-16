@@ -30,7 +30,11 @@ import CategoryFilter from "../Category";
 import Skeleton from "./skleton";
 import Rating from "../Rating";
 import SortFitur from "../SortFitur";
-import { selectIsAuthenticated, setAuthenticated } from "./fitur/AuthSlice";
+import {
+  selectIsAuthenticated,
+  selectVoucherData,
+  setAuthenticated,
+} from "./fitur/AuthSlice";
 import { verifJWT } from "../../../../service/API";
 import { motion } from "framer-motion";
 import ImageModal from "./fitur/ImageModal";
@@ -40,6 +44,8 @@ import {
   selectFavorites,
 } from "./fitur/FavSlice";
 import { ToastContainer, toast } from "react-toastify";
+import VoucherModal from "./VocuherModal";
+import useAuthCheck from "../../../../service/AuthHook";
 
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
@@ -63,6 +69,10 @@ const ProductList = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const voucherData = useSelector(selectVoucherData);
+  const [isVoucherModalOpen, setVoucherModalOpen] = useState(false);
+
+  useAuthCheck();
   const fetchData = async () => {
     try {
       const response = await axios.get("https://fakestoreapi.com/products");
@@ -73,6 +83,14 @@ const ProductList = () => {
       setIsError(true);
     }
   };
+  useEffect(() => {
+   
+    if (voucherData && voucherData[0].is_used === 0) {
+      setVoucherModalOpen(true);
+    } else {
+      setVoucherModalOpen(false);
+    }
+  }, [voucherData]);
 
   useEffect(() => {
     fetchData();
@@ -255,6 +273,10 @@ const ProductList = () => {
             closeCartModal={closeCartModal}
           />
         </div>
+      )}
+
+      {isVoucherModalOpen && (
+        <VoucherModal onClose={() => setVoucherModalOpen(false)} />
       )}
       {isImageModalOpen && (
         <ImageModal

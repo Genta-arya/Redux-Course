@@ -215,7 +215,7 @@ const CartModalContent = ({
       }
 
       const voucherData = await response.json();
-      const discountPercentage = voucherData.discountPercentage;
+      const discountPercentage = voucherData.discountPercentage ;
      
       setAppliedDiscountPercentage(discountPercentage);
       setVoucherError(null);
@@ -231,6 +231,7 @@ const CartModalContent = ({
       setAppliedDiscountPercentage(null);
     }
   };
+  
 
   return (
     <AnimatePresence>
@@ -366,7 +367,7 @@ const CartModalContent = ({
 
             {appliedDiscountPercentage !== null && (
               <div className="text-base font-bold">
-                Discount Applied: {appliedDiscountPercentage}%
+                Discount Applied: {appliedDiscountPercentage * 100}%
               </div>
             )}
 
