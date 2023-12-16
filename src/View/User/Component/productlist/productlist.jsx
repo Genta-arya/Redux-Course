@@ -158,7 +158,7 @@ const ProductList = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 md:p-3 w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 md:p-3 gap-2 p-2">
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
         ) : filteredAndSortedProducts.length === 0 ? (
@@ -176,7 +176,7 @@ const ProductList = () => {
               initial="hidden"
               animate="visible"
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="shadow-2xl drop-shadow-2xl shadow-black mt-8 py-12 bg-white  rounded-xl px-6 md:px-12  h-auto w-[95%] md:w-[95%] lg:w-[90%] text-center mx-auto mb-8 flex flex-col justify-between "
+              className="shadow-2xl drop-shadow-2xl bg-white rounded-lg flex flex-col justify-between gap-2 text-center mt-4 w-auto  px-2  py-8 lg:w-[95%]"
             >
               <div className="overflow-hidden relative mx-auto w-full group">
                 <img
