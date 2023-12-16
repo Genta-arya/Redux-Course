@@ -72,7 +72,7 @@ const Category = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 justify-start gap-4 border-white border-t-2 px-40">
+    <div className="grid grid-cols-1 justify-start gap-4 ">
       <div className="flex justify-between">
         <label className="text-white  font-semibold text-base lg:text-xl md:text-xl mb-2 px-4 mt-4 lg:px-20 md:px-11">
           Categories
@@ -95,10 +95,10 @@ const Category = () => {
           {uniqueCategories.map((category, index) => (
             <div key={category} className="card">
               <button
-                className={`category-item w-[90%] lg:w-[90%] md:w-[90%] lg:h-28 md:h-28 h-16 rounded-xl font-serif font-bold relative text-xl ${
+                className={`category-item w-[90%] lg:w-[90%] md:w-[90%] lg:h-28 md:h-20 h-16 rounded-xl font-serif font-bold relative text-xl ${
                   selectedCategory === category
                     ? "text-white transform transition-all duration-300 rounded-lg text-xs lg:text-xl"
-                    : "rainbow-bg text-white transform scale-100 transition-all duration-300 hover:transform hover:scale-90 hover:transition-all hover:duration-300 rounded-lg text-xs lg:text-xl"
+                    : "rainbow-bg text-white transform scale-100 transition-all duration-300 hover:transform hover:scale-90 hover:transition-all hover:duration-300 rounded-lg text-xs lg:text-base"
                 } transition duration-300 ease-in-out rounded-lg `}
                 style={{
                   backgroundColor:
