@@ -5,7 +5,6 @@ import FooterDaisy from "../../Component/FooterDaisy";
 import Footer from "../../Component/Footer";
 import CustomerReviews from "./CustomerReview";
 
-
 const IndexLp = () => {
   return (
     <main className="bg-white">

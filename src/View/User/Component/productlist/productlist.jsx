@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
-
+import bg from "../../../../assets/notsearch.png"
 import {
   addItem,
   clearCart,
@@ -84,7 +84,6 @@ const ProductList = () => {
     }
   };
   useEffect(() => {
-   
     if (voucherData && voucherData[0].is_used === 0) {
       setVoucherModalOpen(true);
     } else {
@@ -180,8 +179,16 @@ const ProductList = () => {
         {loading ? (
           Array.from({ length: 6 }).map((_, index) => <Skeleton key={index} />)
         ) : filteredAndSortedProducts.length === 0 ? (
-          <div className="flex mx-auto items-center justify-center ">
-            <div className="text-white text-center">Products not found.</div>
+          <div className="flex w-screen items-center justify-center p-4 ">
+            <div className="text-white text-center rounded-lg ">
+              <img
+                src={bg} 
+                alt="No Products Found"
+                className="mb-4 rounded-lg "
+              />
+              <p className="text-lg">We couldn't find any products.</p>
+              <p className="text-lg mt-4">Please check back later.</p>
+            </div>
           </div>
         ) : (
           filteredAndSortedProducts.map((product, index) => (
