@@ -14,6 +14,7 @@ import {
   sortShoppingHistory,
 } from "./fitur/sortHistorySlice";
 import SpendingOverTimeChart from "./Graphic";
+import useAuthCheck from "../../../../service/AuthHook";
 
 const History = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const History = () => {
   const sortType = useSelector(selectSortType);
   const sortOrder = useSelector(selectSortOrder);
   const shoppingHistory = useSelector(selectShoppingHistory);
+  useAuthCheck()
 
   const username = localStorage.getItem("username");
 
