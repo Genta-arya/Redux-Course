@@ -49,6 +49,7 @@ const GameList = () => {
         <Carousel
           showThumbs={false}
           showStatus={false}
+          dots={false}
           infiniteLoop={true}
           emulateTouch={true}
           className="mobile-carousel"
