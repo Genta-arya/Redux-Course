@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as outlineHeart } from "@fortawesome/free-regular-svg-icons";
-import bg from "../../../../assets/notsearch.png"
+import bg from "../../../../assets/notsearch.png";
+import Lottie from 'lottie-react';
+import animationData from '../../../../assets/searchAnim.json'; 
+
 import {
   addItem,
   clearCart,
@@ -181,10 +184,11 @@ const ProductList = () => {
         ) : filteredAndSortedProducts.length === 0 ? (
           <div className="flex w-screen items-center justify-center p-4 ">
             <div className="text-white text-center rounded-lg ">
-              <img
-                src={bg} 
-                alt="No Products Found"
-                className="mb-4 rounded-lg "
+              <Lottie
+                animationData={animationData}
+                loop
+                autoplay
+                style={{ marginBottom: "4rem" }}
               />
               <p className="text-lg">We couldn't find any products.</p>
               <p className="text-lg mt-4">Please check back later.</p>
