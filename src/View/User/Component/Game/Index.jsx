@@ -29,7 +29,7 @@ const GameList = () => {
   ];
 
   const handleShare = (url) => {};
-  const [carouselIndex, setCarouselIndex] = useState(0);
+ 
 
   useEffect(() => {
     document.title = `HKKS | Game`;
@@ -52,7 +52,7 @@ const GameList = () => {
           dots={false}
           infiniteLoop={true}
           emulateTouch={true}
-          className="mobile-carousel"
+          className="mobile-carousel hidden"
         >
           {games.map((game) => (
             <div key={game.id} className="custom-card">
