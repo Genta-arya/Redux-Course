@@ -27,7 +27,7 @@ const useAuthCheck = () => {
         if (!response.ok) {
 
           dispatch(setAuthenticated(false));
-          // navigate('/shop');
+          navigate('/shop');
         } else {
           dispatch(setAuthenticated(true));
 
