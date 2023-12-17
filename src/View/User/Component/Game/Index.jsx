@@ -52,7 +52,7 @@ const GameList = () => {
           dots={false}
           infiniteLoop={true}
           emulateTouch={true}
-          className=""
+          className="mobile-carousel "
         >
           {games.map((game) => (
             <div key={game.id} className="custom-card">
@@ -67,7 +67,7 @@ const GameList = () => {
                     {game.title}
                   </h3>
                 </div>
-                <div className="card-face card-back">
+                <div className="card-face card-back mb-12">
                   <Link
                     to={game.url}
                     rel="noopener noreferrer"
