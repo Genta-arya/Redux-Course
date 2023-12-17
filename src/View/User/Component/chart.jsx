@@ -15,7 +15,6 @@ import { API_ENDPOINTS } from "../../../service/API";
 import { motion, AnimatePresence } from "framer-motion";
 import VoucherForm from "./productlist/fitur/VoucherForm";
 
-
 const CartModalContent = ({
   cartItems,
 
@@ -154,7 +153,7 @@ const CartModalContent = ({
       email: email,
       time: formattedCurrentDate,
     };
-    console.log(orderDetails)
+    console.log(orderDetails);
 
     try {
       const response = await fetch(`${API_ENDPOINTS.ORDER}`, {
@@ -170,7 +169,7 @@ const CartModalContent = ({
       }
 
       const responseData = await response.json();
-     
+
       navigate("/history");
       window.open(responseData.redirect_url, "_blank");
 
@@ -215,8 +214,8 @@ const CartModalContent = ({
       }
 
       const voucherData = await response.json();
-      const discountPercentage = voucherData.discountPercentage ;
-     
+      const discountPercentage = voucherData.discountPercentage;
+
       setAppliedDiscountPercentage(discountPercentage);
       setVoucherError(null);
     } catch (error) {
@@ -231,10 +230,12 @@ const CartModalContent = ({
       setAppliedDiscountPercentage(null);
     }
   };
-  
 
   return (
     <AnimatePresence>
+      <div>
+        
+      </div>
       <motion.div
         key="cart-modal"
         initial={{ opacity: 0, scale: 0.8 }}
@@ -242,16 +243,20 @@ const CartModalContent = ({
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ duration: 0.5 }}
         ref={modalRef}
-        className={`bg-white p-6 rounded-md shadow-lg relative ${styles.cartContainer} h-[500px] overflow-y-auto  w-[90%]`}
+        className={`bg-white p-6 lg:rounded-md md:rounded-lg rounded-t-xl shadow-lg  absolute bottom-20 lg:bottom-0 md:bottom-0 lg:relative md:relative ${styles.cartContainer} lg:h-[500px] md:h-[500px] h-[430px] overflow-y-auto  lg:w-[90%] md:w-[90%] w-[100%]`}
       >
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className="absolute top-2 left-4 text-gray-500 hover:text-gray-700 focus:outline-none"
-          onClick={closeCartModal}
-        >
-          <FontAwesomeIcon icon={faTimes} />
-        </motion.button>
+        <div className="flex justify-center">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="absolute top-3 left-5 text-gray-500 hover:text-gray-700 focus:outline-none text-lg"
+            onClick={closeCartModal}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </motion.button>
+          <h2 className="border-4 w-40 rounded-lg border-gray-500 lg:hidden md:hidden"></h2>
+        </div>
+
         <h2 className="text-xl font-bold mb-4 mt-8">Your Cart</h2>
 
         {cartItems.length === 0 ? (
