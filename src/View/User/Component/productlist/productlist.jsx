@@ -188,7 +188,7 @@ const ProductList = () => {
                 animationData={animationData}
                 loop
                 autoplay
-                className="-mb-24"
+                className="-mb-20"
               />
               <p className="text-lg">Sorry, couldn't find the product "{searchTerm}"</p>
               <p className="text-lg mt-4">Please check back later.</p>

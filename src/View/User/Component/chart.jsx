@@ -243,7 +243,7 @@ const CartModalContent = ({
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ duration: 0.5 }}
         ref={modalRef}
-        className={`bg-white p-6 lg:rounded-md md:rounded-lg rounded-t-xl shadow-lg  absolute bottom-20 lg:bottom-0 md:bottom-0 lg:relative md:relative ${styles.cartContainer} lg:h-[500px] md:h-[500px] h-[430px] overflow-y-auto  lg:w-[90%] md:w-[90%] w-[100%]`}
+        className={`bg-white p-6 lg:rounded-md md:rounded-lg rounded-t-xl shadow-lg  fixed bottom-20 lg:bottom-0 md:bottom-0 lg:relative md:relative ${styles.cartContainer} lg:h-[500px] md:h-[500px] h-[430px] overflow-y-auto  lg:w-[90%] md:w-[90%] w-[100%]`}
       >
         <div className="flex justify-center">
           <motion.button
