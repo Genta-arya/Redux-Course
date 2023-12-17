@@ -52,7 +52,7 @@ const GameList = () => {
           dots={false}
           infiniteLoop={true}
           emulateTouch={true}
-          className="mobile-carousel hidden"
+          className=""
         >
           {games.map((game) => (
             <div key={game.id} className="custom-card">
