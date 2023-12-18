@@ -5,7 +5,7 @@ import Content from "./Content";
 import FooterDaisy from "../../Component/FooterDaisy";
 import Footer from "../../Component/Footer";
 import CustomerReviews from "./CustomerReview";
-
+import image from "../../../../assets/seo.png"
 const IndexLp = () => {
   return (
     <main className="bg-white">
@@ -22,7 +22,7 @@ const IndexLp = () => {
         />
         <meta
           property="og:image"
-          content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+          content={`https://www.hkks.shop` + image}
         />
       </Helmet>
 
