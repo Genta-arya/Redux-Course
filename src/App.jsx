@@ -277,7 +277,10 @@ const App = () => {
           discover products that reflect your lifestyle, meet your needs, and
           provide an unforgettable shopping experience. Happy shopping!"
                     />
-                    <meta property="og:image" content={ogImage} />
+                    <meta
+                      property="og:image"
+                      content={`https://www.hkks.shop` + ogImage}
+                    />
                   </Helmet>
                   <IndexLp />
                 </div>
