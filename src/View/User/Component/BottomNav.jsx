@@ -40,9 +40,11 @@ const BottomNav = ({
                   icon={faShoppingCart}
                   className="mb-1 text-2xl"
                 />
-                <span className="text-xs absolute -top-2 -right-2 bg-red-500 text-white font-bold rounded-full px-2">
-                  {cartItemCount}
-                </span>
+                {cartItemCount !== 0 && (
+                  <span className="text-xs absolute -top-2 -right-2 bg-red-500 text-white font-bold rounded-full px-2">
+                    {cartItemCount}
+                  </span>
+                )}
               </div>
               <span className="text-xs">Cart</span>
             </div>
@@ -60,26 +62,22 @@ const BottomNav = ({
               </div>
 
               <div className="flex items-center flex-col opacity-50">
-                <FontAwesomeIcon
-                  icon={faHistory}
-                  className="mb-1 text-2xl "
-                
-                />
+                <FontAwesomeIcon icon={faHistory} className="mb-1 text-2xl " />
                 <span className="text-xs">History</span>
               </div>
 
               <div className="flex items-center flex-col opacity-50">
-                <div
-                  className="relative "
-                 
-                >
+                <div className="relative ">
                   <FontAwesomeIcon
                     icon={faShoppingCart}
                     className="mb-1 text-2xl"
                   />
-                  <span className="text-xs absolute -top-2 -right-2 bg-red-500 text-white font-bold rounded-full px-2">
-                    {cartItemCount}
-                  </span>
+
+                  {cartItemCount !== 0 && (
+                    <span className="text-xs absolute -top-2 -right-2 bg-red-500 text-white font-bold rounded-full px-2">
+                      {cartItemCount}
+                    </span>
+                  )}
                 </div>
                 <span className="text-xs">Cart</span>
               </div>

@@ -175,9 +175,11 @@ const Navbar = () => {
                   className="mr-2 text-2xl cursor-pointer"
                   onClick={openCartModal}
                 />
-                <div className="bg-red-500 text-white font-bold rounded-full px-2">
-                  {cartItemCount}
-                </div>
+                {cartItemCount !== 0 && (
+                  <div className="bg-red-500 text-white font-bold rounded-full px-2">
+                    {cartItemCount}
+                  </div>
+                )}
               </div>
             </div>
           ) : (
@@ -196,9 +198,11 @@ const Navbar = () => {
                   icon={faShoppingCart}
                   className="mr-2 text-2xl opacity-50 "
                 />
-                <div className="bg-red-500 text-white font-bold rounded-full px-2 opacity-50 ">
-                  {cartItemCount}
-                </div>
+                {cartItemCount !== 0 && (
+                  <div className="bg-red-500 text-white font-bold rounded-full px-2 opacity-50 ">
+                    {cartItemCount}
+                  </div>
+                )}
               </div>
             </div>
           )}
