@@ -221,26 +221,7 @@ const App = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: animationDuration, ease: "easeOut" }}
               >
-                <div>
-                  <Helmet>
-                    <title>HKKS SHOP</title>
-                    <meta
-                      name="description"
-                      content="Welcome to HKKS SHOP, your one-stop destination for high-quality products and an exceptional online shopping experience. Explore a diverse range of products, from everyday essentials to luxury goods. Discover the joy of online shopping with us!"
-                    />
-                    <meta property="og:title" content="HKKS SHOP" />
-                    <meta
-                      property="og:description"
-                      content="Welcome to HKKS SHOP, your one-stop destination for high-quality products and an exceptional online shopping experience. Explore a diverse range of products, from everyday essentials to luxury goods. Discover the joy of online shopping with us!"
-                    />
-                    <meta
-                      property="og:image"
-                      content="https://www.hkks.shop/assets/seo-Fa8QA_Wv.png"
-                    />
-                  </Helmet>
-
-                  <IndexLp />
-                </div>
+                <IndexLp />
               </motion.div>
             </AnimatePresence>
           }
