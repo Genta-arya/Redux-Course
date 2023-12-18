@@ -18,10 +18,7 @@ const IndexLp = () => {
           property="og:description"
           content="Deskripsi halaman utama HKKS SHOP."
         />
-        <meta
-          property="og:image"
-          content="https://www.hkks.shop/assets/seo-Fa8QA_Wv.png"
-        />
+        <meta property="og:image" content="/assets/seo.png" />
       </Helmet>
 
       <Header />
