@@ -29,7 +29,6 @@ const LoginForm = () => {
   const [otp, setOTP] = useState("");
   const [tokenJWT, setJWT] = useState("");
   const [UID, setUID] = useState("");
-  
 
   const [newPassword, setNewPassword] = useState("");
   const [isNewPasswordModalOpen, setIsNewPasswordModalOpen] = useState(false);
@@ -60,14 +59,17 @@ const LoginForm = () => {
 
     try {
       const response = await login(email, password);
-
       if (response.status === 200) {
         setLoginError("");
         setLoginErrorServer("");
-        setEmail(email)
+        setEmail(email);
         setJWT(response.data.token);
         setUID(response.data.uid);
-        
+
+        setTimeout(() => {
+          setJWT("");
+          setUID("");
+        }, 24 * 60 * 60 * 1000);
 
         const usernameResponse = await fetch(`${API_ENDPOINTS.CheckUser}`, {
           method: "POST",
@@ -93,9 +95,7 @@ const LoginForm = () => {
             draggable: true,
             progress: undefined,
           });
-         
-        }
-        else if (response.status === 500) {
+        } else if (response.status === 500) {
           toast.error("Error connection server", {
             position: "top-center",
             autoClose: 3000,
@@ -105,7 +105,6 @@ const LoginForm = () => {
             draggable: true,
             progress: undefined,
           });
-         
         }
       }
     } catch (error) {
@@ -120,7 +119,6 @@ const LoginForm = () => {
         draggable: true,
         progress: undefined,
       });
-
     } finally {
       setIsLoading(false);
     }

@@ -188,9 +188,9 @@ const ProductList = () => {
                 animationData={animationData}
                 loop
                 autoplay
-                className="-mb-20"
+                className="-mb-16"
               />
-              <p className="text-lg">Sorry, couldn't find the product "{searchTerm}"</p>
+              <p className="text-lg">Sorry, couldn't find the product " {searchTerm} "</p>
               <p className="text-lg mt-4">Please check back later.</p>
             </div>
           </div>
@@ -213,6 +213,7 @@ const ProductList = () => {
                   alt={product.title}
                   onClick={() => openImageModal(product.image)}
                   className=" cursor-pointer w-full h-40 md:w-full md:h-52  lg:w-full lg:h-52 object-scale-down p-4 mb-4 hover:scale-90 transition-all duration-500 ease-out"
+                  loading="lazy"
                 />
                 {isAuthenticated && (
                   <button
