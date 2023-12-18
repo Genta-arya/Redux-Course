@@ -21,7 +21,7 @@ const IndexLp = () => {
           content="Welcome to HKKS SHOP"
         />
         <meta
-          property="og:image"
+          name="og:image"
           content={`https://www.hkks.shop` + image}
         />
       </Helmet>
