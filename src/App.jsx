@@ -79,7 +79,10 @@ const App = () => {
           discover products that reflect your lifestyle, meet your needs, and
           provide an unforgettable shopping experience. Happy shopping!"
                     />
-                    <meta property="og:image" content={ogImage} />
+                    <meta
+                      property="og:image"
+                      content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                    />
                   </Helmet>
                   <HomePage />
                 </div>
@@ -99,7 +102,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman login"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <LoginForm />
             </div>
@@ -120,7 +126,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman registrasi"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <Register />
             </div>
@@ -138,7 +147,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman slot"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <SlotMachine />
             </div>
@@ -156,7 +168,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman quiz"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <QuizApp />
             </div>
@@ -177,7 +192,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman daftar permainan"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <GameList />
             </div>
@@ -195,7 +213,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman riwayat"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <History />
             </div>
@@ -213,7 +234,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman error"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <ErrorPage />
             </div>
@@ -279,7 +303,7 @@ const App = () => {
                     />
                     <meta
                       property="og:image"
-                      content={`https://www.hkks.shop${ogImage}`}
+                      content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
                     />
                   </Helmet>
                   <IndexLp />
@@ -303,7 +327,10 @@ const App = () => {
                   property="og:description"
                   content="Deskripsi halaman tidak ditemukan"
                 />
-                <meta property="og:image" content={ogImage} />
+                <meta
+                  property="og:image"
+                  content="https://www.hkks.shop/assets/seo-iH7S-wOH.png"
+                />
               </Helmet>
               <DetailNotFound />
             </div>
