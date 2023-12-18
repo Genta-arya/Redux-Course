@@ -279,7 +279,7 @@ const App = () => {
                     />
                     <meta
                       property="og:image"
-                      content={`https://www.hkks.shop` + ogImage}
+                      content={`https://www.hkks.shop${ogImage}`}
                     />
                   </Helmet>
                   <IndexLp />
