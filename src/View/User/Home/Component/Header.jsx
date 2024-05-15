@@ -37,7 +37,7 @@ const Header = () => {
     >
       <div className="absolute inset-0 w-screen ">
         <img
-          src="https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg"
+          src="https://firebasestorage.googleapis.com/v0/b/bengkel-fdf57.appspot.com/o/Portfolio%2FScreenshot_31.png?alt=media&token=9c45c81d-f621-4863-be69-51bf83c3ee74"
           alt="Header Background"
           className="object-cover w-full h-full  "
         />
